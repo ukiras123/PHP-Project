@@ -3,7 +3,7 @@
 require_once 'config.php';
 
 // Define variables and initialize with empty values
-$username = $password = $confirm_password = "";
+$username = $password = $confirm_password = $usertype =  "";
 $username_err = $password_err = $confirm_password_err = "";
 
 // Processing form data when form is submitted
@@ -61,32 +61,57 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
+    // Validate password
+    $usertype = $_POST['usertype'];
+
     // Check input errors before inserting in database
     if (empty($username_err) && empty($password_err) && empty($confirm_password_err)) {
 
 
-        $usertype = $_POST["usertype"];
-        // Prepare an insert statement
-        $sql = "INSERT INTO users (username, password, type) VALUES (?, ?, ?)";
+        if ($usertype == 'employee') {
+            $sql = "INSERT INTO users (username, password, type, firstname, lastname) VALUES (?, ?, ?, ?, ?)";
 
-        if ($stmt = mysqli_prepare($link, $sql)) {
-            // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "sss", $param_username, $param_password, $param_usertype);
+            if ($stmt = mysqli_prepare($link, $sql)) {
+                // Bind variables to the prepared statement as parameters
+                mysqli_stmt_bind_param($stmt, "sssss", $param_username, $param_password, $param_usertype, $param_firstname, $param_lastname);
 
-            // Set parameters
-            $param_username = $username;
-            $param_usertype = $usertype == 'employee' ? 'e' : 'c';
-            $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
-
-            // Attempt to execute the prepared statement
-            if (mysqli_stmt_execute($stmt)) {
-                // Redirect to login page
-                header("location: login.php");
-            } else {
-                echo "Something went wrong. Please try again later.";
+                // Set parameters
+                $param_username = $username;
+                $param_usertype = $usertype == 'employee' ? 'e' : 'c';
+                $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
+                $param_firstname = $_POST["firstname"];
+                $param_lastname = $_POST["lastname"];
+                // Attempt to execute the prepared statement
+                if (mysqli_stmt_execute($stmt)) {
+                    // Redirect to login page
+                    header("location: login.php");
+                } else {
+                    echo "Something went wrong. Please try again later.";
+                }
             }
-        }
+        } else {
+            $sql = "INSERT INTO users (username, password, type, companyname) VALUES (?, ?, ?, ?)";
 
+            if ($stmt = mysqli_prepare($link, $sql)) {
+                // Bind variables to the prepared statement as parameters
+                mysqli_stmt_bind_param($stmt, "ssss", $param_username, $param_password, $param_usertype, $param_companyname);
+
+                // Set parameters
+                $param_username = $username;
+                $param_usertype = $usertype == 'employee' ? 'e' : 'c';
+                $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
+                $param_companyname =  $_POST["companyname"];
+
+                // Attempt to execute the prepared statement
+                if (mysqli_stmt_execute($stmt)) {
+                    // Redirect to login page
+                    header("location: login.php");
+                } else {
+                    echo "Something went wrong. Please try again later.";
+                }
+            }
+
+        }
         // Close statement
         mysqli_stmt_close($stmt);
     }
@@ -105,16 +130,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" type="text/css"
           href="https://cdn.jsdelivr.net/npm/css-toggle-switch@latest/dist/toggle-switch.css"/>
     <style type="text/css">
-        body{ font: 14px sans-serif; }
+        body {
+            font: 14px sans-serif;
+        }
 
-        .wrapper{ width: 350px; padding: 20px;margin: 0 auto; }
+        .wrapper {
+            width: 350px;
+            padding: 20px;
+            margin: 0 auto;
+        }
 
-        .jumbotron{
+        .jumbotron {
             height: 100%;
             background-color: #ccbb99 !important;
-            align-content:center;
-            justify-items:center;
-            align-items:center;
+            align-content: center;
+            justify-items: center;
+            align-items: center;
             text-align: center;
         }
 
@@ -139,8 +170,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <div class="wrapper">
 
-    <h3>Sign Up</h3>
+        <h3>Sign Up</h3>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" class="form-signin">
+            <fieldset>
+                <div class="switch-toggle alert alert-light">
+                    <input id="employee" name="usertype" value="employee" type="radio" checked>
+                    <label for="employee">Employee</label>
+
+                    <input id="company" name="usertype" value="company" type="radio">
+                    <label for="company">ExternalCompany</label>
+
+                    <a class="btn btn-primary"></a>
+                </div>
+            </fieldset>
+
+            <div class="form-group" id="firstname">
+                <label>First Name</label>
+                <input type="text" name="firstname" id="firstnameinput" class="form-control">
+            </div>
+
+            <div class="form-group" id="lastname">
+                <label>Last Name</label>
+                <input type="text" name="lastname" id="lastnameinput" class="form-control">
+            </div>
+
+            <div class="form-group" id="companyname" hidden>
+                <label>Company Name</label>
+                <input type="text" name="companyname" id="companynameinput" class="form-control">
+            </div>
+
             <div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
                 <label>Username</label>
                 <input type="text" required name="username" class="form-control" value="<?php echo $username; ?>">
@@ -158,25 +216,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <span class="help-block"><?php echo $confirm_password_err; ?></span>
             </div>
 
-            <div class="form-group" id="companyname" hidden>
-                <label>Company Name</label>
-                <input type="text" name="companyname" id="companynameinput" class="form-control">
-            </div>
-
-            <fieldset>
-                <div class="switch-toggle alert alert-light">
-                    <input id="employee" name="usertype" value="employee" type="radio">
-                    <label for="employee" >Employee</label>
-
-                    <input id="company" name="usertype" value="company" type="radio" >
-                    <label for="company" >ExternalCompany</label>
-
-                    <a class="btn btn-primary"></a>
-                </div>
-            </fieldset>
-
-
-
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Submit">
                 <input type="reset" class="btn btn-default" value="Reset">
@@ -192,7 +231,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </div> <!-- /container -->
 
 
-<script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+        crossorigin="anonymous"></script>
 <script src="userLogin.js"></script>
 
 </body>

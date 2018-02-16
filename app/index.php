@@ -4,7 +4,7 @@ session_start();
 
 // If session variable is not set it will redirect to login page
 if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
-    header("location: login.php");
+    header("location: ./UserLogin/login.php");
     exit;
 }
 ?>
@@ -21,8 +21,8 @@ if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
 </head>
 <body>
 <div class="page-header">
-    <h1>Hi, <b><?php echo $_SESSION['username']; ?></b>. Welcome to our site.              [<?php echo $_SESSION['type']; ?>]</h1>
+    <h1>Hi, <b><?php echo $_SESSION['name']; ?></b>. Welcome to our site.              [<?php echo $_SESSION['type']; ?>]</h1>
 </div>
-<p><a href="logout.php" class="btn btn-danger">Sign Out of Your Account</a></p>
+<p><a href="UserLogin/logout.php" class="btn btn-danger">Sign Out of Your Account</a></p>
 </body>
 </html>

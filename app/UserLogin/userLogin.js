@@ -6,11 +6,21 @@
 
 
 $('#employee').click(function() {
+    $("#firstname").show();
+    $("#firstnameinput").prop('required',true);
+    $("#lastname").show();
+    $("#lastnameinput").prop('required',true);
+
     $("#companyname").hide();
     $("#companynameinput").prop('required',false);
 });
 
 $('#company').click(function() {
+    $("#firstname").hide();
+    $("#firstnameinput").prop('required',false);
+    $("#lastname").hide();
+    $("#lastnameinput").prop('required',false);
+
     $("#companyname").show();
     $("#companynameinput").prop('required',true);
 });
