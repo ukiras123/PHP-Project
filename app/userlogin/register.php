@@ -137,37 +137,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <link rel="stylesheet" type="text/css"
           href="https://cdn.jsdelivr.net/npm/css-toggle-switch@latest/dist/toggle-switch.css"/>
-    <style type="text/css">
-        body {
-            font: 14px sans-serif;
-        }
-
-        .wrapper {
-            width: 350px;
-            padding: 20px;
-            margin: 0 auto;
-        }
-
-        .jumbotron {
-            height: 100%;
-            background-color: #ccbb99 !important;
-            align-content: center;
-            justify-items: center;
-            align-items: center;
-            text-align: center;
-        }
-
-        .jumbotron h2 {
-            color: #1a1a34;
-            font-size: 40px;
-            font-family: 'Shift', sans-serif;
-            font-weight: bold;
-        }
-
-        .top25x {
-            margin-top: 25px;
-        }
-    </style>
+    <link rel="stylesheet" href="../assets/style/generic-stype.css">
 </head>
 <body>
 <div class="container">
@@ -241,7 +211,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
         crossorigin="anonymous"></script>
-<script src="userLogin.js"></script>
+<script src="../assets/js/userLogin.js"></script>
 
 </body>
 </html>

@@ -96,40 +96,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-<!--    <script type="text/javascript" src="userLogin.js"></script>-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
-    <style type="text/css">
-        body {
-            font: 14px sans-serif;
-        }
-
-        .wrapper {
-            width: 350px;
-            padding: 20px;
-            margin: 0 auto;
-        }
-
-        .jumbotron {
-            height: 100%;
-            background-color: #ccbb99 !important;
-            align-content: center;
-            justify-items: center;
-            align-items: center;
-            text-align: center;
-        }
-
-        .jumbotron h2 {
-            color: #1a1a34;
-            font-size: 40px;
-            font-family: 'Shift', sans-serif;
-            font-weight: bold;
-        }
-
-        .top25x {
-            margin-top: 25px;
-        }
-
-    </style>
+    <link rel="stylesheet" href="../assets/style/generic-stype.css">
 </head>
 <body>
 <div class="container">

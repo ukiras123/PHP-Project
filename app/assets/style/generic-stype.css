@@ -1,0 +1,29 @@
+body {
+    font: 14px sans-serif;
+}
+
+.wrapper {
+    width: 360px;
+    padding: 20px;
+    margin: 0 auto;
+}
+
+.jumbotron {
+    height: 100%;
+    background-color: #ccbb99 !important;
+    align-content: center;
+    justify-items: center;
+    align-items: center;
+    text-align: center;
+}
+
+.jumbotron h2 {
+    color: #1a1a34;
+    font-size: 40px;
+    font-family: 'Shift', sans-serif;
+    font-weight: bold;
+}
+
+.top25x {
+    margin-top: 25px;
+}
