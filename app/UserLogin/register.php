@@ -81,8 +81,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
                 $param_firstname = $_POST["firstname"];
                 $param_lastname = $_POST["lastname"];
+
                 // Attempt to execute the prepared statement
                 if (mysqli_stmt_execute($stmt)) {
+                    $cookie_name = "isSignUp";
+                    $cookie_value = "true";
+                    setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
+
                     // Redirect to login page
                     header("location: login.php");
                 } else {
@@ -104,6 +109,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 // Attempt to execute the prepared statement
                 if (mysqli_stmt_execute($stmt)) {
+                    $cookie_name = "isSignUp";
+                    $cookie_value = "true";
+                    setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
                     // Redirect to login page
                     header("location: login.php");
                 } else {

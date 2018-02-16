@@ -6,6 +6,15 @@ require_once 'config.php';
 $username = $password = "";
 $username_err = $password_err = "";
 
+$cookie_name = "isSignUp";
+$tohide = "hidden";
+if(isset($_COOKIE[$cookie_name])) {
+    if ($_COOKIE[$cookie_name] == "true") {
+        $tohide = "";
+    }
+    setcookie($cookie_name, "", time() - 3600, '/');
+}
+
 // Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -46,17 +55,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     mysqli_stmt_bind_result($stmt, $username, $hashed_password, $type, $companyname, $firstname, $lastname);
                     if (mysqli_stmt_fetch($stmt)) {
                         if (password_verify($password, $hashed_password)) {
+
                             /* Password is correct, so start a new session and
                             save the username to the session */
                             session_start();
                             $_SESSION['username'] = $username;
                             $_SESSION['type'] = $type == 'e' ? 'Employee' : 'Company';
-                            if ($type == 'e')
-                            {
+                            if ($type == 'e') {
                                 $_SESSION['name'] = $firstname;
-                            }
-                            else
-                            {
+                            } else {
                                 $_SESSION['name'] = $companyname;
                             }
                             header("location: ../index.php");
@@ -81,6 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Close connection
     mysqli_close($link);
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -88,7 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <script type="text/javascript" src="file.js"></script>
+<!--    <script type="text/javascript" src="userLogin.js"></script>-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <style type="text/css">
         body {
@@ -101,12 +109,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             margin: 0 auto;
         }
 
-        .jumbotron{
+        .jumbotron {
             height: 100%;
             background-color: #ccbb99 !important;
-            align-content:center;
-            justify-items:center;
-            align-items:center;
+            align-content: center;
+            justify-items: center;
+            align-items: center;
             text-align: center;
         }
 
@@ -127,6 +135,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <div class="container">
     <div class="jumbotron">
         <h2>ASU Consulting Company</h2>
+    </div>
+
+    <div class="alert alert-success" <?php echo $tohide ?>>
+        <strong>Success!</strong> User successfully Created.
     </div>
 
     <div class="wrapper">
