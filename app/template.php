@@ -20,17 +20,19 @@
     <div class="masthead">
 
         <nav>
-            <ul class="nav nav-justified">
-                <li class="active"><a href="index.php">Home</a></li>
-                <li><a href="reserve.php"><?php echo $reserve_rent ?></a></li>
-                <li><a href="#">View Reports</a></li>
-                <li><a href="#" class="btn btn-default dropdown-toggle thick" data-toggle="dropdown"
-                       data-hover="dropdown"><?php echo $name ?></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Profile</a></li>
-                        <li><a href="#">My History</a></li>
-                        <li><a href="userlogin/logout.php">Logout <span class="glyphicon glyphicon-off"></span> </a></a></li>
-                    </ul>
+            <ul class="nav nav-pills nav-justified">
+                <li class="<?php echo $indexActive ?>"><a href="index.php">Home</a></li>
+                <li class="<?php echo $reserveActive ?>"><a href="reserve.php"><?php echo $reserve_rent ?></a></li>
+                <li class="<?php echo $reportActive ?>"><a href="report.php">View Reports</a></li>
+                <li class="<?php echo $profileActive ?>">
+                <a href="" class="btn btn-default dropdown-toggle thick" data-toggle="dropdown"
+                   data-hover="dropdown"><?php echo $name ?></a>
+                <ul class="dropdown-menu">
+                    <li><a href="profile.php">Profile</a></li>
+                    <li><a href="myhistory.php">My History</a></li>
+                    <li><a href="userlogin/logout.php">Logout <span class="glyphicon glyphicon-off"></span> </a></a>
+                    </li>
+                </ul>
                 </li>
             </ul>
         </nav>
