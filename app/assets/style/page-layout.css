@@ -11,6 +11,11 @@
     max-width:1400px;  /* define the max width */
 }
 
+.dropdown-menu li a:hover {
+    background-color: #dd796b
+}
+
+
 .thick
 {
     font-weight: bold;
