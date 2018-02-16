@@ -40,7 +40,7 @@
     </div>
 
     <div class="jumbotron container-fluid">
-        <h1>ASU Company!</h1>
+        <h1>MY Company!</h1>
         <p class="lead">Lets make it work</p>
     </div>
 

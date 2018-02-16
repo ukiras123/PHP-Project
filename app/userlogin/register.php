@@ -143,7 +143,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <div class="container">
 
     <div class="jumbotron">
-        <h2>ASU Consulting Company</h2>
+        <h2>MY Consulting Company</h2>
     </div>
 
     <div class="wrapper">
