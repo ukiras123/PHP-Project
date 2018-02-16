@@ -6,10 +6,13 @@
 - Start the server
 - Run schema.sql for database setup
 - Change DB credential in app/userlogin/config.php
+- http://localhost:8080/
 
-**How to run in Docker**
+**How to build and run in Docker**
 - docker build -f Dockerfile -t myapp .
 - docker run -d -p 8080:80 myapp
+- http://localhost:8080/
 
 **Use Existing Docker Image**
 - docker run -d -p 8080:80 ukiras123/mycompany
+- http://localhost:8080/
