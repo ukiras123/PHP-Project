@@ -1,4 +1,5 @@
-# PHP-Project
+# PHP-Project  
+[![Build Status](https://travis-ci.org/ukiras123/PHP-Project.svg?branch=master)](https://travis-ci.org/ukiras123/PHP-Project/)
 
 **How to setup manually**
 - Install MAMP
