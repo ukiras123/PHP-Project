@@ -148,7 +148,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <link rel="stylesheet" type="text/css"
           href="https://cdn.jsdelivr.net/npm/css-toggle-switch@latest/dist/toggle-switch.css"/>
-    <link rel="stylesheet" href="../assets/style/generic-stype.css">
+    <link rel="stylesheet" href="../assets/style/generic-style.css">
 </head>
 <body>
 <div class="container">

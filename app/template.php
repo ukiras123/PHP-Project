@@ -49,7 +49,7 @@
     </div>
 
 
-    <div class="jumbotron container-fluid">
+    <div class="jumbotron">
         <img src="assets/logo/logo.png" alt="logo" />
         <h1 class = "generic-heading">Empowering the Nation
         </h1>
