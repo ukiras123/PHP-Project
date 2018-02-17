@@ -35,7 +35,7 @@
                 <li class="<?php echo $reportActive ?>"><a href="report.php">View Reports</a></li>
                 <li class="<?php echo $profileActive ?>">
                 <a href="" class="btn btn-default dropdown-toggle thick" data-toggle="dropdown"
-                   data-hover="dropdown"><?php echo $name ?></a>
+                   data-hover="dropdown"><?php echo $nameWthLogo ?></a>
                 <ul class="dropdown-menu">
                     <li><a href="profile.php">Profile</a></li>
                     <li><a href="myhistory.php">My History</a></li>

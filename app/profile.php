@@ -11,6 +11,7 @@ $reportActive = "";
 $profileActive = "active";
 $indexActive = "";
 $profile = "";
+
 session_start();
 // If session variable is not set it will redirect to login page
 if (!isset($_SESSION['username']) || empty($_SESSION['username'])) {
@@ -21,14 +22,15 @@ if (!isset($_SESSION['username']) || empty($_SESSION['username'])) {
 
     $reserve_rent = $_SESSION['type'] == 'Employee' ? "Reserve" : "Rent";
     $_SESSION['type'] == 'e' ? $title = "Reserve" : "Rent";
-    $name = '<span class="glyphicon glyphicon-user"></span>' . "&nbsp;&nbsp;&nbsp;" . $_SESSION['name'];
+    $name = $_SESSION['name'];
+    $nameWthLogo = '<span class="glyphicon glyphicon-user"></span>' . "&nbsp;&nbsp;&nbsp;" . $_SESSION['name'];
 }
 
 
 $content = '
 <row>
 <div class="center center-text">
-    <h3>Kiran Gautam</h3>
+    <h3> ' . $name . '</h3>
     <img src= '. $profile . ' alt="ProfilePic">
     <form  action= "utilities/upload.php" method="post" enctype="multipart/form-data" >
         <input type="hidden" name="MAX_FILE_SIZE" value="4194304" />

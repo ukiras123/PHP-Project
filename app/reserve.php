@@ -17,7 +17,7 @@ if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
 {
     $reserve_rent = $_SESSION['type'] == 'Employee' ? "Reserve" : "Rent";
     $_SESSION['type'] == 'e' ? $title = "Reserve" : "Rent";
-    $name = '<span class="glyphicon glyphicon-user"></span>' ."&nbsp;&nbsp;&nbsp;". $_SESSION['name'];
+    $nameWthLogo = '<span class="glyphicon glyphicon-user"></span>' ."&nbsp;&nbsp;&nbsp;". $_SESSION['name'];
 }
 
 include 'template.php';
