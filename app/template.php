@@ -57,14 +57,13 @@
     </div>
 
 
-    <div class="row">
         <?php echo $content; ?>
-    </div>
 
-
-    <footer class="footer">
+    <row>
+    <footer class="footer top50x">
         <p>&copy; All rights reserved</p>
     </footer>
+    </row>
 </div>
 
 

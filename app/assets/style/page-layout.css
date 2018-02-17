@@ -1,23 +1,20 @@
-.jumbotron
-{
+.jumbotron {
     padding-top: 0px;
-    padding-bottom:0px;
+    padding-bottom: 0px;
     background-size: cover;
     background-color: #ccbb99 !important;
     width: 100%; /* make sure to define width to fill container */
     height: 150px; /* define the height in pixels or make sure   */
     /* you have something in your div with height */
     /* so you can see your image */
-    max-width:1400px;  /* define the max width */
+    max-width: 1400px; /* define the max width */
 }
 
 .dropdown-menu li a:hover {
     background-color: #dd796b
 }
 
-
-.thick
-{
+.thick {
     font-weight: bold;
 }
 
@@ -25,28 +22,63 @@ body {
     padding-top: 10px;
 }
 
-
-
 .jumbotron img {
     float: left;
     width: 150px;
     height: 150px;
-    top:0;
-    left:0;
-    right:50px;
+    top: 0;
+    left: 0;
+    right: 50px;
 }
 
 .jumbotron h1 {
     font-family: 'Playfair Display', serif;
-    text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
+    text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.3);
     color: #1a1a34;
     font-weight: bold;
     vertical-align: middle;
 }
 
-
 .generic-heading {
     position: relative;
     top: 18px;
     left: 50px;
+}
+
+div img{
+    width:200px;
+    height:200px;
+}
+
+.top50x
+{
+    margin-top: 50px;
+}
+
+.center-text {
+    text-align:center
+}
+
+.center-me {
+    margin: auto;
+    padding: 10px;
+}
+
+.center {
+    margin: auto;
+    width: 30%;
+    border: 3px solid green;
+    padding: 10px;
+}
+
+input[type=file] {
+    margin-top:5px;
+    margin-bottom:2px;
+    margin-left:auto;
+    margin-right:auto;}
+
+
+.left20x
+{
+    margin-left: 80px;
 }
