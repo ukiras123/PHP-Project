@@ -10,5 +10,9 @@ RUN apt-get update && apt-get install -y \
 	&& docker-php-ext-install -j$(nproc) gd \
 	&& docker-php-ext-install mysqli \
 	&& docker-php-ext-enable mysqli
+#	&& curl -sS https://getcomposer.org/installer | php
+#	&& php composer.phar require aws/aws-sdk-php
 
 COPY app /var/www/html/
+
+RUN chmod 777 -R /var/www/html
