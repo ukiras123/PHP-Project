@@ -11,10 +11,11 @@
     <meta name="description" content="My Company. We do all short of things. This is where we get things done. Bla Bla Bla.">
     <meta name="keywords" content="PHP,Company,Reserve">
     <meta name="author" content="Kiran Gautam">
-
+    <link rel="icon" href="./assets/logo/favicon.ico">
 
     <title><?php echo $title; ?></title>
 
+    <link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
@@ -47,10 +48,14 @@
 
     </div>
 
+
     <div class="jumbotron container-fluid">
-        <h1>MY Company!</h1>
-        <p class="lead">Lets make it work</p>
+        <img src="assets/logo/logo.png" alt="logo" />
+        <h1 class = "generic-heading">Empowering the Nation
+        </h1>
+<!--        <p class="lead generic-heading">In Service We Trust</p>-->
     </div>
+
 
     <div class="row">
         <?php echo $content; ?>

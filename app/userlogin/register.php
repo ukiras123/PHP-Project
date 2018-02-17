@@ -132,7 +132,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta content="Make It Happen" property="og:title" />
+    <meta content="https://avatars2.githubusercontent.com/u/11082638?s=400&amp;v=4" property="og:image" />
+    <meta name="description" content="My Company. We do all short of things. This is where we get things done. Bla Bla Bla.">
+    <meta name="keywords" content="PHP,Company,Reserve">
+    <meta name="author" content="Kiran Gautam">
+    <link rel="icon" href="../assets/logo/favicon.ico">
+
     <title>Sign Up</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <link rel="stylesheet" type="text/css"
@@ -143,7 +154,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <div class="container">
 
     <div class="jumbotron">
-        <h2>MY Consulting Company</h2>
+        <img src="../assets/logo/logo.png" alt="logo" />
+        <h1>Welcome To Machine</h1>
     </div>
 
     <div class="wrapper">
