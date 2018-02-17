@@ -7,9 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <meta content="Make It Happen" property="og:title" />
-    <meta content="https://avatars2.githubusercontent.com/u/11082638?s=400&amp;v=4" property="og:image" />
-    <meta name="description" content="My Company. We do all short of things. This is where we get things done. Bla Bla Bla.">
-    <meta name="keywords" content="PHP,Company,Reserve">
+    <meta content="https://s3-us-west-1.amazonaws.com/software-download-personal/picture/logo.png" property="og:image" />
+    <meta name="description"
+          content="CA Consultancy. We deliver. | Conference Room | Laptops | Microphone Rental">    <meta name="keywords" content="PHP,Company,Reserve">
     <meta name="author" content="Kiran Gautam">
     <link rel="icon" href="./assets/logo/favicon.ico">
 
