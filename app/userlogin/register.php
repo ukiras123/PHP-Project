@@ -176,12 +176,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div class="form-group" id="firstname">
                 <label>First Name</label>
-                <input type="text" name="firstname" id="firstnameinput" class="form-control">
+                <input type="text" required name="firstname" id="firstnameinput" class="form-control">
             </div>
 
             <div class="form-group" id="lastname">
                 <label>Last Name</label>
-                <input type="text" name="lastname" id="lastnameinput" class="form-control">
+                <input type="text" resuired name="lastname" id="lastnameinput" class="form-control">
             </div>
 
             <div class="form-group" id="companyname" hidden>
