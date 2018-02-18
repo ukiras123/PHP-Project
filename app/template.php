@@ -59,11 +59,11 @@
 
         <?php echo $content; ?>
 
-    <row>
+    <div class="row">
     <footer class="footer top50x">
         <p>&copy; All rights reserved</p>
     </footer>
-    </row>
+    </div>
 </div>
 
 

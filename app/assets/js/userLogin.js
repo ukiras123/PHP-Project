@@ -4,7 +4,6 @@
 //     console.log(userType)
 // }
 
-
 $('#employee').click(function() {
     $("#firstname").show();
     $("#firstnameinput").prop('required',true);
@@ -17,9 +16,10 @@ $('#employee').click(function() {
 
 $('#company').click(function() {
     $("#firstname").hide();
-    $("#firstnameinput").prop('required',false);
-    $("#lastname").hide();
-    $("#lastnameinput").prop('required',false);
+    $("#firstname").show();
+    $("#firstnameinput").prop('required',true);
+    $("#lastname").show();
+    $("#lastnameinput").prop('required',true);
 
     $("#companyname").show();
     $("#companynameinput").prop('required',true);

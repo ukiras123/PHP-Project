@@ -61,12 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             session_start();
                             $_SESSION['username'] = $username;
                             $_SESSION['profile'] = $profile;
-                            $_SESSION['type'] = $type == 'e' ? 'Employee' : 'Company';
-                            if ($type == 'e') {
-                                $_SESSION['name'] = $firstname;
-                            } else {
-                                $_SESSION['name'] = $companyname;
-                            }
+                            $_SESSION['type'] = $type == 'e' ? 'employee' : 'company';
                             header("location: ../index.php");
                         } else {
                             // Display an error message if password is not valid
