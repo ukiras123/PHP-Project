@@ -18,6 +18,7 @@ if (!isset($_SESSION['username']) || empty($_SESSION['username'])) {
     header("location: userlogin/login.php");
     exit;
 } else {
+
     $profile = IsNullOrEmptyString($_SESSION['profile']) ? "assets/logo/placeholder-profile-male.jpg" : $_SESSION['profile'];
 
     if (!file_exists($profile)) {
