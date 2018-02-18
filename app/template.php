@@ -50,7 +50,7 @@
 
 
     <div class="jumbotron container-fluid">
-        <img src="assets/logo/logo.png" alt="logo" />
+        <a href="index.php"><img src="assets/logo/logo.png" alt="logo" /></a>
         <h1 class = "generic-heading">Empowering the Nation
         </h1>
 <!--        <p class="lead generic-heading">In Service We Trust</p>-->

@@ -182,7 +182,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <div class="container">
 
     <div class="jumbotron">
-        <img src="../assets/logo/logo.png" alt="logo" />
+        <a href="./login.php"><img src="../assets/logo/logo.png" alt="logo" /></a>
         <h1>Welcome To Machine</h1>
     </div>
 
