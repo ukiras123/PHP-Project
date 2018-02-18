@@ -62,7 +62,7 @@ function updateUser($userdetail, $username)
 
 function updateProfilePic($imagelocation, $username)
 {
-    $sql = "UPDATE users SET profile = '" .$imagelocation . "  where username = '" .$username . "'";
+    $sql = "UPDATE users SET profile = '" .$imagelocation . "'  where username = '" .$username . "'";
     $link = getDBLink();
     if ($result = mysqli_query($link, $sql)) {
         mysqli_close($link);
