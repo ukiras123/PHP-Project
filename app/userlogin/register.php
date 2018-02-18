@@ -1,10 +1,24 @@
 <?php
 // Include config file
 require_once '../utilities/config.php';
+require_once '../utilities/generic-function.php';
+require_once '../utilities/fb-config.php';
+if(!session_id()) {
+    session_start();
+}
 
 // Define variables and initialize with empty values
 $username = $password = $confirm_password = $usertype =  "";
 $username_err = $password_err = $confirm_password_err = "";
+$fb_firstname = $fb_lastname = "";
+if (isset($_COOKIE["fb_first_name"]))
+{
+    $fb_firstname = $_COOKIE["fb_first_name"];
+    $fb_lastname = $_COOKIE["fb_last_name"];
+    setcookie("fb_first_name", "", time() - 3600, "/");
+    setcookie("fb_last_name", "", time() - 3600, "/");
+}
+
 
 // Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -115,12 +129,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $cookie_value = "true";
                     setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
                     // Redirect to login page
+
+                    if (isset($_COOKIE["fb_pic"]))
+                    {
+                        updateProfilePic($_COOKIE["fb_pic"], $username);
+                        setcookie("fb_pic", "", time() - 3600, "/");
+                    }
+
                     header("location: login.php");
                 } else {
                     echo "Something went wrong. Please try again later.";
                 }
             }
-
         }
         // Close statement
         mysqli_stmt_close($stmt);
@@ -178,12 +198,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div class="form-group" id="firstname">
                 <label>First Name</label>
-                <input type="text" required name="firstname" id="firstnameinput" class="form-control">
+                <input type="text" value = "<?php  echo  $fb_firstname ?>" required name="firstname" id="firstnameinput" class="form-control">
             </div>
 
             <div class="form-group" id="lastname">
                 <label>Last Name</label>
-                <input type="text" required name="lastname" id="lastnameinput" class="form-control">
+                <input type="text" value = "<?php  echo  $fb_lastname ?>" required name="lastname" id="lastnameinput" class="form-control">
             </div>
 
             <div class="form-group" id="companyname" hidden>
@@ -201,6 +221,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="password" required name="password" class="form-control" value="<?php echo $password; ?>">
                 <span class="help-block"><?php echo $password_err; ?></span>
             </div>
+
             <div class="form-group <?php echo (!empty($confirm_password_err)) ? 'has-error' : ''; ?>">
                 <label>Confirm Password</label>
                 <input type="password" required name="confirm_password" class="form-control"
@@ -214,6 +235,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <p style="text-align:center">Already have an account? <a href="login.php">Login here</a>.</p>
         </form>
+
+
+        <?php
+        $loginUrl = $helper->getLoginUrl('http://ec2-13-57-248-248.us-west-1.compute.amazonaws.com/utilities/facebook-signup.php', $permissions);
+        echo '<button onclick ="window.location.href=\'' . $loginUrl . '\'" id="myButton" class="center btn btn-info submit-button">User Facebook to Sign Up</a>';
+        ?>
+
     </div>
 
     <footer class="footer top25x">
