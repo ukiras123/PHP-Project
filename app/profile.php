@@ -10,7 +10,7 @@ $reserveActive = "";
 $reportActive = "";
 $profileActive = "active";
 $indexActive = "";
-$profile = "";
+$profile = $db_profile = "";
 
 session_start();
 // If session variable is not set it will redirect to login page
@@ -19,7 +19,9 @@ if (!isset($_SESSION['username']) || empty($_SESSION['username'])) {
     exit;
 } else {
 
-    $profile = IsNullOrEmptyString($_SESSION['profile']) ? "assets/logo/placeholder-profile-male.jpg" : $_SESSION['profile'];
+   $db_profile = getProfilePic($_SESSION['username']);
+
+    $profile = IsNullOrEmptyString($db_profile) ? "assets/logo/placeholder-profile-male.jpg" : $db_profile;
 
     if (!file_exists($profile)) {
         $profile = "assets/logo/placeholder-profile-male.jpg";

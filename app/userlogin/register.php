@@ -102,6 +102,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $cookie_value = "true";
                     setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
 
+                    if (isset($_COOKIE["fb_pic"]))
+                    {
+                        updateProfilePic($_COOKIE["fb_pic"], $username);
+                        setcookie("fb_pic", "", time() - 3600, "/");
+                    }
+
                     // Redirect to login page
                     header("location: login.php");
                 } else {
