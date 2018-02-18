@@ -245,7 +245,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <?php
         $loginUrl = $helper->getLoginUrl('http://ec2-13-57-248-248.us-west-1.compute.amazonaws.com/utilities/facebook-signup.php', $permissions);
-        echo '<button onclick ="window.location.href=\'' . $loginUrl . '\'" id="myButton" class="center btn btn-info submit-button">User Facebook to Sign Up</a>';
+        echo '<button onclick ="window.location.href=\'' . $loginUrl . '\'" id="myButton" class="center btn btn-info submit-button">Use Facebook to Sign Up</a>';
         ?>
 
     </div>
