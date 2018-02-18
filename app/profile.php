@@ -19,13 +19,9 @@ if (!isset($_SESSION['username']) || empty($_SESSION['username'])) {
     exit;
 } else {
 
-   $db_profile = getProfilePic($_SESSION['username']);
+    $db_profile = getProfilePic($_SESSION['username']);
 
     $profile = IsNullOrEmptyString($db_profile) ? "assets/logo/placeholder-profile-male.jpg" : $db_profile;
-
-    if (!file_exists($profile)) {
-        $profile = "assets/logo/placeholder-profile-male.jpg";
-    }
 
     $user_detail = getUserInfo($_SESSION['username']);
 
