@@ -38,10 +38,6 @@ if (!isset($_SESSION['username']) || empty($_SESSION['username'])) {
     $db_companyname = $user_detail['companyname'];
     $maleselected = $femaleselected = "";
 
-    if ($type != "employee") {
-        $db_fullname = $db_companyname;
-    }
-
     if ($db_sex == "male") {
         $maleselected = 'selected = "selected"';
     } elseif ($db_sex == "female") {

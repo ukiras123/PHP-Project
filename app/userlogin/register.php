@@ -95,17 +95,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
             }
         } else {
-            $sql = "INSERT INTO users (username, password, type, companyname) VALUES (?, ?, ?, ?)";
+            $sql = "INSERT INTO users (username, password, type, companyname, firstname, lastname) VALUES (?, ?, ?, ?, ?, ?)";
 
             if ($stmt = mysqli_prepare($link, $sql)) {
                 // Bind variables to the prepared statement as parameters
-                mysqli_stmt_bind_param($stmt, "ssss", $param_username, $param_password, $param_usertype, $param_companyname);
+                mysqli_stmt_bind_param($stmt, "ssss", $param_username, $param_password, $param_usertype, $param_companyname,$param_firstname, $param_lastname);
 
                 // Set parameters
                 $param_username = $username;
                 $param_usertype = $usertype == 'employee' ? 'e' : 'c';
                 $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
                 $param_companyname =  $_POST["companyname"];
+                $param_firstname = $_POST["firstname"];
+                $param_lastname = $_POST["lastname"];
 
                 // Attempt to execute the prepared statement
                 if (mysqli_stmt_execute($stmt)) {
