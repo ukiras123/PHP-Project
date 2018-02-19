@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y \
 #	&& curl -sS https://getcomposer.org/installer | php
 #	&& php composer.phar require aws/aws-sdk-php
 
+COPY config/php.ini /usr/local/etc/php/
 COPY app /var/www/html/
 
 RUN chmod 777 -R /var/www/html
