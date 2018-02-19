@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $username_err = "Please enter a username.";
     } else {
         // Prepare a select statement
-        $sql = "SELECT id FROM users WHERE username = ?";
+        $sql = "SELECT uId FROM users WHERE username = ?";
 
         if ($stmt = mysqli_prepare($link, $sql)) {
             // Bind variables to the prepared statement as parameters
@@ -99,7 +99,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             if ($stmt = mysqli_prepare($link, $sql)) {
                 // Bind variables to the prepared statement as parameters
-                mysqli_stmt_bind_param($stmt, "ssss", $param_username, $param_password, $param_usertype, $param_companyname,$param_firstname, $param_lastname);
+                mysqli_stmt_bind_param($stmt, "ssssss", $param_username, $param_password, $param_usertype, $param_companyname,$param_firstname, $param_lastname);
 
                 // Set parameters
                 $param_username = $username;
@@ -118,6 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     header("location: login.php");
                 } else {
                     echo "Something went wrong. Please try again later.";
+                    var_dump($stmt);
                 }
             }
 

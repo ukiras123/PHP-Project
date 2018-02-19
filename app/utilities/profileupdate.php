@@ -16,6 +16,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sex = trim($_POST["sex"]);
     $email = trim($_POST["email"]);
     $phone = trim($_POST["phone"]);
+    $departmentid = null;
+    if (isset($_POST["department"])) {
+        $departmentid = trim($_POST["department"]);
+    }
     $userdetail = [
         "firstname" => $firstname,
         "lastname" => $lastname,
@@ -23,6 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         "sex" => $sex,
         "email" => $email,
         "phone" => $phone ,
+        "department" => $departmentid ,
     ];
     updateUser($userdetail, $username);
     header("location: ../profile.php");

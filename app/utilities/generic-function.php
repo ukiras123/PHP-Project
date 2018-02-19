@@ -45,9 +45,62 @@ function getUserInfo($username)
     return $return_arr;
 }
 
+function getDepartmentInfo()
+{
+    $sql = "SELECT dId, departmentname FROM department";
+    $link = getDBLink();
+    $departmentHtml = "";
+
+    if ($stmt = mysqli_prepare($link, $sql)) {
+
+        // Attempt to execute the prepared statement
+        if (mysqli_stmt_execute($stmt)) {
+            $result = mysqli_stmt_get_result($stmt);
+
+            // Check number of rows in the result set
+            if (mysqli_num_rows($result) > 0) {
+                // Fetch result rows as an associative array
+                while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                    $departmentHtml = $departmentHtml . "<option value = " . $row["dId"] . "> " . $row["departmentname"] . "</option>";
+                }
+            }
+        } else {
+            echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+        }
+        mysqli_stmt_close($stmt);
+    } else {
+        echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+    }
+    return $departmentHtml;
+}
+
+
+
+function getInsertDetail($userdetail)
+{
+    $insertFirstName = " firstname = '" . $userdetail['firstname'] ."', " ;
+    $insertLastName = " lastname = '" . $userdetail['lastname'] ."', " ;
+    $insertcompanyname = " companyname = '" . $userdetail['companyname']  ."', "  ;
+    $insertsex = " sex = '" . $userdetail['sex'] . "', " ;
+    $insertemail = " email = '" . $userdetail['email']  ."', "  ;
+    $insertphone = " phone = '" . $userdetail['phone']  ."', " ;
+    $insert = $insertFirstName .$insertLastName . $insertcompanyname.$insertsex. $insertemail.$insertphone;
+
+    $insertdId = " dId = '" . $userdetail['department'] ."', " ;
+    if (!IsNullOrEmptyString($userdetail['department'])) {
+        $insert = $insert . $insertdId;
+    }
+    $insert = substr($insert, 0, -2);
+    return $insert . ' ';
+}
+
 function updateUser($userdetail, $username)
 {
-    $sql = "UPDATE users SET firstname = '" . $userdetail['firstname'] . "', lastname = '" . $userdetail['lastname'] . "', companyname = '" . $userdetail['companyname'] . "' , sex = '" . $userdetail['sex'] . "' , email = '" . $userdetail['email'] . "' , phone = '" . $userdetail['phone'] . "'  where username = '" .$username . "'";
+
+
+    $insertDetail = getInsertDetail($userdetail);
+
+    $sql = "UPDATE users SET ". $insertDetail . "  where username = '" . $username . "'";
     $link = getDBLink();
     if ($result = mysqli_query($link, $sql)) {
         mysqli_close($link);
@@ -60,7 +113,7 @@ function updateUser($userdetail, $username)
 
 function updateProfilePic($imagelocation, $username)
 {
-    $sql = "UPDATE users SET profile = '" .$imagelocation . "'  where username = '" .$username . "'";
+    $sql = "UPDATE users SET profile = '" . $imagelocation . "'  where username = '" . $username . "'";
     $link = getDBLink();
     if ($result = mysqli_query($link, $sql)) {
         mysqli_close($link);
@@ -73,12 +126,12 @@ function updateProfilePic($imagelocation, $username)
 
 function getProfilePic($username)
 {
-    $sql = "select profile from users where username = '" .$username . "'";
+    $sql = "select profile from users where username = '" . $username . "'";
     $link = getDBLink();
     $profile = "";
     if ($result = mysqli_query($link, $sql)) {
         while ($row = mysqli_fetch_row($result)) {
-            $profile =  $row[0];
+            $profile = $row[0];
         }
         mysqli_free_result($result);
         mysqli_close($link);

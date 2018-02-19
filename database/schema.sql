@@ -18,7 +18,7 @@ CREATE TABLE users (
   email varchar(50),
   phone varchar(25),
   sex varchar(10),
-  profilepic varchar(255),
+  profile varchar(255),
   type char(1) NOT NULL,
   companyname varchar(50),
   dId int(11) unsigned,

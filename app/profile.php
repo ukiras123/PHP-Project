@@ -44,17 +44,16 @@ if (!isset($_SESSION['username']) || empty($_SESSION['username'])) {
         $femaleselected = 'selected = "selected"';
     }
 
-    $companyhidden = "";
+    $companyhidden = $departmenthidden = $departments ="";
 
     if ($type == "employee") {
         $companyhidden = "hidden";
+        $departmenthidden = "";
+        $departments =  getDepartmentInfo();
+    }else{
+        $companyhidden = "";
+        $departmenthidden = "hidden";
     }
-
-
-    $departments = '
-    
-    
-    ';
 
     $reserve_rent = $_SESSION['type'] == 'Employee' ? "Reserve" : "Rent";
     $_SESSION['type'] == 'e' ? $title = "Reserve" : "Rent";
@@ -121,7 +120,7 @@ name="email" id="emailinput" class="form-control" value="' . $db_email . '">
     <div class="form-group" id="department" '. $departmenthidden .' >
         <label for="departmentinput">Department</label>
         <select class="form-control" name="department" id="departmentinput">
-            '. $departments . '
+            '. $departments. '
         </select>
     </div>
     
