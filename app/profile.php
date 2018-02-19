@@ -50,6 +50,12 @@ if (!isset($_SESSION['username']) || empty($_SESSION['username'])) {
         $companyhidden = "hidden";
     }
 
+
+    $departments = '
+    
+    
+    ';
+
     $reserve_rent = $_SESSION['type'] == 'Employee' ? "Reserve" : "Rent";
     $_SESSION['type'] == 'e' ? $title = "Reserve" : "Rent";
     $nameWthLogo = '<span class="glyphicon glyphicon-user"></span>' . "&nbsp;&nbsp;&nbsp;" . $_SESSION['username'];
@@ -111,6 +117,14 @@ name="email" id="emailinput" class="form-control" value="' . $db_email . '">
         <label>Phone [xxx-xxx-xxxx]</label>
         <input type="tel" pattern="^\d{3}-\d{3}-\d{4}$" name="phone" id="phoneinput" class="form-control" value="' . $db_phone . '">
     </div>
+    
+    <div class="form-group" id="department" '. $departmenthidden .' >
+        <label for="departmentinput">Department</label>
+        <select class="form-control" name="department" id="departmentinput">
+            '. $departments . '
+        </select>
+    </div>
+    
     <button type="submit" class="btn btn-primary">Update</button>
 </form>
 

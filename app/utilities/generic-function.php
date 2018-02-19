@@ -8,11 +8,7 @@ function IsNullOrEmptyString($str)
 
 function getDBLink()
 {
-    $DB_SERVER = "ec2-13-57-248-248.us-west-1.compute.amazonaws.com";
-    $DB_USERNAME = "root";
-    $DB_PASSWORD = "rootkiran";
-    $DB_NAME = "app";
-
+    require 'credential.php';
     $link = mysqli_connect($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_NAME);
 
     if ($link === false) {
