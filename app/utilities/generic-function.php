@@ -1,6 +1,17 @@
 <?php
 
 
+function replaceFromHaystack($haystack,$needle,$replace)
+{
+    $pos = strpos($haystack, $needle);
+    $newstring = $haystack;
+    if ($pos !== false) {
+        $newstring = substr_replace($haystack, $replace, $pos, strlen($needle));
+    }
+    return $newstring;
+}
+
+
 function IsNullOrEmptyString($str)
 {
     return (!isset($str) || trim($str) === '');
@@ -94,7 +105,7 @@ function getResourceDropdown()
 }
 
 
-function getComputerDetails()
+function getComputerDetails($query)
 {
 
     $computerHtmlUpper = '<table class="table top20x">
@@ -115,8 +126,7 @@ function getComputerDetails()
         </table>';
 
 
-    $sql = "select r.type, c.manufacturer, c.model, c.os, c. serialnum, r.description from resources r inner join computer c
-on c.rID = r.rId";
+    $sql = $query;
     $link = getDBLink();
 
     if ($stmt = mysqli_prepare($link, $sql)) {
@@ -153,7 +163,7 @@ on c.rID = r.rId";
 }
 
 
-function getMicrophoneDetail()
+function getMicrophoneDetail($query)
 {
 
     $computerHtmlUpper = '<table class="table top20x">
@@ -173,8 +183,7 @@ function getMicrophoneDetail()
         </table>';
 
 
-    $sql = "select r.type, m.manufacturer, m.model, m.serialnum, r.description from resources r inner join microphone m
-on m.rID = r.rId";
+    $sql = $query;
     $link = getDBLink();
 
     if ($stmt = mysqli_prepare($link, $sql)) {
@@ -211,7 +220,7 @@ on m.rID = r.rId";
     return $computerHtmlUpper . $computerHtmlMid . $computerHtmlBotom;
 }
 
-function getProjectorDetail()
+function getProjectorDetail($query)
 {
 
     $computerHtmlUpper = '<table class="table top20x">
@@ -231,8 +240,7 @@ function getProjectorDetail()
         </table>';
 
 
-    $sql = "select r.type, p.manufacturer, p.model, p.serialnum, r.description from resources r inner join projector p
-on p.rID = r.rId";
+    $sql = $query;
     $link = getDBLink();
 
     if ($stmt = mysqli_prepare($link, $sql)) {
@@ -269,7 +277,7 @@ on p.rID = r.rId";
     return $computerHtmlUpper . $computerHtmlMid . $computerHtmlBotom;
 }
 
-function getRoomDetail()
+function getRoomDetail($query)
 {
 
     $computerHtmlUpper = '<table class="table top20x">
@@ -289,8 +297,8 @@ function getRoomDetail()
         </table>';
 
 
-    $sql = "select r.type, ro.name, ro.roomnum, ro.capacity, r.description from resources r inner join room ro
-on ro.rID = r.rId";
+    $sql = $query;
+
     $link = getDBLink();
 
     if ($stmt = mysqli_prepare($link, $sql)) {
@@ -326,6 +334,75 @@ on ro.rID = r.rId";
 
     return $computerHtmlUpper . $computerHtmlMid . $computerHtmlBotom;
 }
+
+
+function getAvailableResource($type, $startdate, $enddate)
+{
+
+    $computerHtmlUpper = '<table class="table top20x">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Type</th>
+              <th>Manufacturer</th>
+              <th>Model</th>
+              <th>OS</th>
+              <th>Serial No</th>
+              <th>Description</th>
+            </tr>
+          </thead><tbody>';
+    $computerHtmlMid = '';
+    $computerHtmlBotom = '
+          </tbody>
+        </table>';
+
+
+    $sql = "select r.type, c.manufacturer, c.model, c.os, c. serialnum, r.description from resources r inner join computer c
+    on c.rID = r.rId";
+    $link = getDBLink();
+
+    if ($stmt = mysqli_prepare($link, $sql)) {
+
+        // Attempt to execute the prepared statement
+        if (mysqli_stmt_execute($stmt)) {
+            $result = mysqli_stmt_get_result($stmt);
+
+            // Check number of rows in the result set
+            if (mysqli_num_rows($result) > 0) {
+                // Fetch result rows as an associative array
+                $i = 1;
+                while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                    $computerHtmlMid = $computerHtmlMid . '<tr>
+                          <th scope="row">' . $i . '</th>
+                          <td>' . $row["type"] . '</td>
+                          <td>' . $row["manufacturer"] . '</td>
+                          <td>' . $row["model"] . '</td>
+                          <td>' . $row["os"] . '</td>
+                          <td>' . $row["serialnum"] . '</td>
+                          <td>' . $row["description"] . '</td>
+                        </tr>';
+                    $i++;
+                }
+            }
+        } else {
+            echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+        }
+        mysqli_stmt_close($stmt);
+    } else {
+        echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+    }
+    return $computerHtmlUpper . $computerHtmlMid . $computerHtmlBotom;
+}
+
+
+
+
+
+
+
+
+
+
 
 
 function getInsertDetail($userdetail)

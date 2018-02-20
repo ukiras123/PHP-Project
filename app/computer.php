@@ -1,6 +1,7 @@
 <?php
 
 require_once 'utilities/generic-function.php';
+require_once 'utilities/query.php';
 
 
 $title = "Computer Resources";
@@ -25,7 +26,7 @@ if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
     $nameWthLogo = '<span class="glyphicon glyphicon-user"></span>' ."&nbsp;&nbsp;&nbsp;". $_SESSION['username'];
 }
 $content = getResourceDropdown();
-$content = $content . getComputerDetails();
+$content = $content . getComputerDetails($allcomputerdetail);
 
 include 'template.php';
 

@@ -59,12 +59,15 @@
     </div>
 
 
-        <?php echo $content; ?>
+    <?php echo $content; ?>
+    <?php echo $content2; ?>
 
     <div class="row">
-    <footer class="footer top50x">
-        <p>&copy; All rights reserved</p>
-    </footer>
+        <div class="col-xs-4 col-md-4">
+        <footer class="footer top50x">
+            <p>&copy; All rights reserved</p>
+        </footer>
+        </div>
     </div>
 </div>
 

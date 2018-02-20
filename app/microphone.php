@@ -1,6 +1,7 @@
 <?php
 
 require_once 'utilities/generic-function.php';
+require_once 'utilities/query.php';
 
 
 $title = "Microphone Resources";
@@ -12,6 +13,7 @@ $reportActive = "";
 $profileActive = "";
 $indexActive = "active";
 $additionalHead = "";
+$content2 = "";
 
 session_start();
 // If session variable is not set it will redirect to login page
@@ -24,7 +26,7 @@ if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
     $nameWthLogo = '<span class="glyphicon glyphicon-user"></span>' ."&nbsp;&nbsp;&nbsp;". $_SESSION['username'];
 }
 $content = getResourceDropdown();
-$content = $content . getMicrophoneDetail();
+$content = $content . getMicrophoneDetail($allmicrophonedetail);
 
 include 'template.php';
 

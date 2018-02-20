@@ -37,7 +37,7 @@ CREATE TABLE resources (
 
 CREATE TABLE computer (
   rId int(11) unsigned NOT NULL,
-  serialnum int(20) NOT NULL,
+  serialnum int(20) NOT NULL UNIQUE,
   os varchar(25) NOT NULL,
   model varchar(25) NOT NULL,
   manufacturer varchar(25) NOT NULL,
@@ -48,7 +48,7 @@ CREATE TABLE computer (
 
 CREATE TABLE projector (
   rId int(11) unsigned NOT NULL,
-  serialnum int(20) NOT NULL,
+  serialnum int(20) NOT NULL UNIQUE,
   model varchar(25) NOT NULL,
   manufacturer varchar(25) NOT NULL,
   technology varchar(25) NOT NULL,
@@ -59,7 +59,7 @@ CREATE TABLE projector (
 CREATE TABLE room (
   rId int(11) unsigned NOT NULL,
   name varchar(50) NOT NULL,
-  roomnum int(11) NOT NULL,
+  roomnum int(11) NOT NULL UNIQUE,
   capacity varchar(25) NOT NULL,
   KEY rId (rId),
   FOREIGN KEY (rId) REFERENCES resources (rId)
@@ -68,7 +68,7 @@ CREATE TABLE room (
 
 CREATE TABLE microphone (
   rId int(11) unsigned NOT NULL,
-  serialnum int(20) NOT NULL,
+  serialnum int(20) NOT NULL UNIQUE ,
   model varchar(25) NOT NULL,
   manufacturer varchar(25) NOT NULL,
   KEY rId (rId),
@@ -85,7 +85,8 @@ CREATE TABLE user_resources (
   KEY rId (rId),
   KEY uId (uId),
   FOREIGN KEY (rId) REFERENCES resources (rId),
-  FOREIGN KEY (uId) REFERENCES users (uId)
+  FOREIGN KEY (uId) REFERENCES users (uId),
+  PRIMARY KEY (rId, startdatetime, enddatetime)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 

@@ -8,6 +8,7 @@ $reportActive = "";
 $profileActive = "active";
 $indexActive = "";
 $additionalHead = "";
+$content2 = "";
 
 session_start();
 // If session variable is not set it will redirect to login page
