@@ -105,9 +105,9 @@ function getResourceDropdown()
 }
 
 
-function getComputerDetails($query)
+function getComputerDetails($query, $withAction = false)
 {
-
+    $addTh = $withAction == true ? "<th>Action</th>" : "";
     $computerHtmlUpper = '<table class="table top20x">
           <thead>
             <tr>
@@ -118,6 +118,7 @@ function getComputerDetails($query)
               <th>OS</th>
               <th>Serial No</th>
               <th>Description</th>
+              '.$addTh. '
             </tr>
           </thead><tbody>';
     $computerHtmlMid = '';
@@ -140,6 +141,7 @@ function getComputerDetails($query)
                 // Fetch result rows as an associative array
                 $i = 1;
                 while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                    $addTd = $withAction == true ? '<td><button id="action" name="action" type="submit" class="btn btn-warning action" value="'.$row["rId"].'">Book</button></td>' : "";
                     $computerHtmlMid = $computerHtmlMid . '<tr>
                           <th scope="row">' . $i . '</th>
                           <td>' . $row["type"] . '</td>
@@ -148,6 +150,7 @@ function getComputerDetails($query)
                           <td>' . $row["os"] . '</td>
                           <td>' . $row["serialnum"] . '</td>
                           <td>' . $row["description"] . '</td>
+                          '. $addTd . '
                         </tr>';
                     $i++;
                 }
@@ -163,9 +166,9 @@ function getComputerDetails($query)
 }
 
 
-function getMicrophoneDetail($query)
+function getMicrophoneDetail($query, $withAction = false)
 {
-
+    $addTh = $withAction == true ? "<th>Action</th>" : "";
     $computerHtmlUpper = '<table class="table top20x">
           <thead>
             <tr>
@@ -175,6 +178,7 @@ function getMicrophoneDetail($query)
               <th>Model</th>
               <th>Serial No</th>
               <th>Description</th>
+              '.$addTh. '
             </tr>
           </thead><tbody>';
     $computerHtmlMid = '';
@@ -197,6 +201,7 @@ function getMicrophoneDetail($query)
                 // Fetch result rows as an associative array
                 $i = 1;
                 while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                    $addTd = $withAction == true ? '<td><button name="action" type="submit" class="btn btn-warning action" value="'.$row["rId"].'">Book</button></td>' : "";
                     $computerHtmlMid = $computerHtmlMid . '<tr>
                           <th scope="row">' . $i . '</th>
                           <td>' . $row["type"] . '</td>
@@ -204,6 +209,7 @@ function getMicrophoneDetail($query)
                           <td>' . $row["model"] . '</td>
                           <td>' . $row["serialnum"] . '</td>
                           <td>' . $row["description"] . '</td>
+                          '. $addTd . '
                         </tr>';
                     $i++;
                 }
@@ -220,9 +226,9 @@ function getMicrophoneDetail($query)
     return $computerHtmlUpper . $computerHtmlMid . $computerHtmlBotom;
 }
 
-function getProjectorDetail($query)
+function getProjectorDetail($query, $withAction = false)
 {
-
+    $addTh = $withAction == true ? "<th>Action</th>" : "";
     $computerHtmlUpper = '<table class="table top20x">
           <thead>
             <tr>
@@ -232,6 +238,7 @@ function getProjectorDetail($query)
               <th>Model</th>
               <th>Serial No</th>
               <th>Description</th>
+              '.$addTh. '
             </tr>
           </thead><tbody>';
     $computerHtmlMid = '';
@@ -254,6 +261,7 @@ function getProjectorDetail($query)
                 // Fetch result rows as an associative array
                 $i = 1;
                 while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                    $addTd = $withAction == true ? '<td><button id="action" name="action" type="submit" class="btn btn-warning action" value="'.$row["rId"].'">Book</button></td>' : "";
                     $computerHtmlMid = $computerHtmlMid . '<tr>
                           <th scope="row">' . $i . '</th>
                           <td>' . $row["type"] . '</td>
@@ -261,6 +269,7 @@ function getProjectorDetail($query)
                           <td>' . $row["model"] . '</td>
                           <td>' . $row["serialnum"] . '</td>
                           <td>' . $row["description"] . '</td>
+                          '. $addTd . '
                         </tr>';
                     $i++;
                 }
@@ -277,9 +286,9 @@ function getProjectorDetail($query)
     return $computerHtmlUpper . $computerHtmlMid . $computerHtmlBotom;
 }
 
-function getRoomDetail($query)
+function getRoomDetail($query, $withAction = false)
 {
-
+    $addTh = $withAction == true ? "<th>Action</th>" : "";
     $computerHtmlUpper = '<table class="table top20x">
           <thead>
             <tr>
@@ -289,6 +298,7 @@ function getRoomDetail($query)
               <th>Room No</th>
               <th>Capacity</th>
               <th>Description</th>
+              '.$addTh. '
             </tr>
           </thead><tbody>';
     $computerHtmlMid = '';
@@ -312,6 +322,7 @@ function getRoomDetail($query)
                 // Fetch result rows as an associative array
                 $i = 1;
                 while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                    $addTd = $withAction == true ? '<td><button id="action" name="action" type="submit" class="btn btn-warning action" value="'.$row["rId"].'">Book</button></td>' : "";
                     $computerHtmlMid = $computerHtmlMid . '<tr>
                           <th scope="row">' . $i . '</th>
                           <td>' . $row["type"] . '</td>
@@ -319,6 +330,7 @@ function getRoomDetail($query)
                           <td>' . $row["roomnum"] . '</td>
                           <td>' . $row["capacity"] . '</td>
                           <td>' . $row["description"] . '</td>
+                          '. $addTd . '
                         </tr>';
                     $i++;
                 }
@@ -334,75 +346,6 @@ function getRoomDetail($query)
 
     return $computerHtmlUpper . $computerHtmlMid . $computerHtmlBotom;
 }
-
-
-function getAvailableResource($type, $startdate, $enddate)
-{
-
-    $computerHtmlUpper = '<table class="table top20x">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Type</th>
-              <th>Manufacturer</th>
-              <th>Model</th>
-              <th>OS</th>
-              <th>Serial No</th>
-              <th>Description</th>
-            </tr>
-          </thead><tbody>';
-    $computerHtmlMid = '';
-    $computerHtmlBotom = '
-          </tbody>
-        </table>';
-
-
-    $sql = "select r.type, c.manufacturer, c.model, c.os, c. serialnum, r.description from resources r inner join computer c
-    on c.rID = r.rId";
-    $link = getDBLink();
-
-    if ($stmt = mysqli_prepare($link, $sql)) {
-
-        // Attempt to execute the prepared statement
-        if (mysqli_stmt_execute($stmt)) {
-            $result = mysqli_stmt_get_result($stmt);
-
-            // Check number of rows in the result set
-            if (mysqli_num_rows($result) > 0) {
-                // Fetch result rows as an associative array
-                $i = 1;
-                while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-                    $computerHtmlMid = $computerHtmlMid . '<tr>
-                          <th scope="row">' . $i . '</th>
-                          <td>' . $row["type"] . '</td>
-                          <td>' . $row["manufacturer"] . '</td>
-                          <td>' . $row["model"] . '</td>
-                          <td>' . $row["os"] . '</td>
-                          <td>' . $row["serialnum"] . '</td>
-                          <td>' . $row["description"] . '</td>
-                        </tr>';
-                    $i++;
-                }
-            }
-        } else {
-            echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
-        }
-        mysqli_stmt_close($stmt);
-    } else {
-        echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
-    }
-    return $computerHtmlUpper . $computerHtmlMid . $computerHtmlBotom;
-}
-
-
-
-
-
-
-
-
-
-
 
 
 function getInsertDetail($userdetail)

@@ -35,22 +35,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($_POST["type"] == "computer") {
             $searchcomputer = replaceFromHaystack($searchcomputer, "?", $_POST["endDate"]);
             $searchcomputer = replaceFromHaystack($searchcomputer, "?", $_POST["startDate"]);
-            $content2 = getComputerDetails($searchcomputer);
+            $content2 = getComputerDetails($searchcomputer, true);
             $computerselected = 'selected="selected"';
         } elseif (isset($_POST["type"]) && $_POST["type"] == "microphone") {
             $searchmicrophone = replaceFromHaystack($searchmicrophone, "?", $_POST["endDate"]);
             $searchmicrophone = replaceFromHaystack($searchmicrophone, "?", $_POST["startDate"]);
-            $content2 = getMicrophoneDetail($searchmicrophone);
+            $content2 = getMicrophoneDetail($searchmicrophone, true);
             $microphoneselected = 'selected="selected"';
         } elseif (isset($_POST["type"]) && $_POST["type"] == "room") {
             $searchroom = replaceFromHaystack($searchroom, "?", $_POST["endDate"]);
             $searchroom = replaceFromHaystack($searchroom, "?", $_POST["startDate"]);
-            $content2 = getRoomDetail($searchroom);
+            $content2 = getRoomDetail($searchroom, true);
             $roomselected = 'selected="selected"';
         } elseif (isset($_POST["type"]) && $_POST["type"] == "projector") {
             $searchprojector = replaceFromHaystack($searchprojector, "?", $_POST["endDate"]);
             $searchprojector = replaceFromHaystack($searchprojector, "?", $_POST["startDate"]);
-            $content2 = getProjectorDetail($searchprojector);
+            $content2 = getProjectorDetail($searchprojector, true);
             $projectorselected = 'selected="selected"';
         }
     }
