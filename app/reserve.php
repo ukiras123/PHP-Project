@@ -31,6 +31,10 @@ $startDate = $endDate = $computerselected = $microphoneselected = $projectorsele
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $startDate = isset($_POST["startDate"]) ?  'value = "' . $_POST["startDate"].'"' : "";
     $endDate =   isset($_POST["endDate"]) ? 'value = "' .$_POST["endDate"].'"' : "";
+
+    setcookie("startDate", $_POST["startDate"], time() + (86400 * 30), "/"); // 86400 = 1 day
+    setcookie("endDate", $_POST["endDate"], time() + (86400 * 30), "/"); // 86400 = 1 day
+
     if(isset($_POST["type"])) {
         if ($_POST["type"] == "computer") {
             $searchcomputer = replaceFromHaystack($searchcomputer, "?", $_POST["endDate"]);
@@ -61,6 +65,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 $content = '
+<div id="loader" class="loader center" hidden></div>
+
+<div id="pass" class="alert alert-success" hidden>
+        <strong>Success!</strong> Successfully Booked. You can view confirmation on your profile history.
+ </div>
+ 
+ <div id="fail" class="alert alert-danger" hidden>
+        <strong>Failed!</strong> Something went wrong! Please try again.
+ </div>
+    
 <form action="" method="post"> 
 <div class="row">
 

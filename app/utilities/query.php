@@ -52,7 +52,7 @@ OR ('?' < enddatetime
 
 
 $bookresource ="insert into user_resources
-set rId = ?, uId = (select uId from users where username = ?),
-startdatetime = ?, enddatetime = ?";
+set rId = ?, uId = (select uId from users where username = '?'),
+startdatetime = '?', enddatetime = '?'";
 
 ?>
