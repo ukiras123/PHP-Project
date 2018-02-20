@@ -14,6 +14,8 @@
     <link rel="icon" href="./assets/logo/favicon.ico">
 
     <title><?php echo $title; ?></title>
+    <?php echo $additionalHead; ?>
+
 
     <link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"

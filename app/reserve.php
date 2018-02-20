@@ -7,6 +7,7 @@ $reserveActive = "active";
 $reportActive = "";
 $profileActive = "";
 $indexActive = "";
+$additionalHead = "";
 
 session_start();
 // If session variable is not set it will redirect to login page
@@ -19,6 +20,9 @@ if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
     $_SESSION['type'] == 'employee' ? $title = "Reserve" : "Rent";
     $nameWthLogo = '<span class="glyphicon glyphicon-user"></span>' ."&nbsp;&nbsp;&nbsp;". $_SESSION['username'];
 }
+
+
+$content = '';
 
 include 'template.php';
 
