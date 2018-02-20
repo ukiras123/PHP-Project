@@ -22,6 +22,7 @@ CREATE TABLE users (
   type char(1) NOT NULL,
   companyname varchar(50),
   dId int(11) unsigned,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (uId),
   FOREIGN KEY (dId) REFERENCES department (dId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -78,9 +79,9 @@ CREATE TABLE microphone (
 CREATE TABLE user_resources (
   rId int(11) unsigned NOT NULL,
   uId int(11) unsigned NOT NULL,
-  reqdatetime timestamp NOT NULL,
-  startdatetime timestamp NOT NULL,
-  enddatetime timestamp NOT NULL,
+  startdatetime datetime NOT NULL,
+  enddatetime datetime NOT NULL,
+  reqdatetime DATETIME DEFAULT CURRENT_TIMESTAMP,
   KEY rId (rId),
   KEY uId (uId),
   FOREIGN KEY (rId) REFERENCES resources (rId),
