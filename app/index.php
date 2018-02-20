@@ -3,7 +3,7 @@
 require_once 'utilities/generic-function.php';
 
 
-$title = "Home";
+$title = "Index";
 $reserve_rent = "";
 $name = "";
 $content = "";
