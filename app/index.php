@@ -22,8 +22,8 @@ if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
     $reserve_rent = $_SESSION['type'] == 'Employee' ? "Reserve" : "Rent";
     $nameWthLogo = '<span class="glyphicon glyphicon-user"></span>' ."&nbsp;&nbsp;&nbsp;". $_SESSION['username'];
 }
-$content = getResourceDropdown();
-
+$content = getResourceDropdown().
+'<img src="assets/logo/backgroundPic.jpg" class="image-size top5x img-rounded img-responsive" alt="Parterns">';
 
 include 'template.php';
 

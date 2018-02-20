@@ -60,6 +60,11 @@ div img{
     margin-top: 20px;
 }
 
+.top5x
+{
+    margin-top: 5px;
+}
+
 .center-text {
     text-align:center
 }
@@ -87,4 +92,11 @@ input[type=file] {
 {
     margin-left: 80px;
 }
+
+.image-size
+{
+    height: 100%;
+    width: 100%;
+}
+
 
