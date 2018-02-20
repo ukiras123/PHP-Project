@@ -75,18 +75,270 @@ function getDepartmentInfo()
 }
 
 
+function getResourceDropdown()
+{
+
+    $resourceHtml = '<div class="dropdown">
+                      <button class="btn btn-default dropdown-toggle btn-primary" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        View Our Inventory
+                        <span class="caret"></span>
+                      </button>
+                      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li><a href="computer.php">Computer</a></li>
+                        <li><a href="microphone.php">Microphone</a></li>
+                        <li><a href="projector.php">Projector</a></li>
+                        <li><a href="room.php">Room</a></li>
+                      </ul>
+                    </div>';
+    return $resourceHtml;
+}
+
+
+function getComputerDetails()
+{
+
+    $computerHtmlUpper = '<table class="table top20x">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Type</th>
+              <th>Manufacturer</th>
+              <th>Model</th>
+              <th>OS</th>
+              <th>Serial No</th>
+              <th>Description</th>
+            </tr>
+          </thead><tbody>';
+    $computerHtmlMid = '';
+    $computerHtmlBotom = '
+          </tbody>
+        </table>';
+
+
+    $sql = "select r.type, c.manufacturer, c.model, c.os, c. serialnum, r.description from resources r inner join computer c
+on c.rID = r.rId";
+    $link = getDBLink();
+
+    if ($stmt = mysqli_prepare($link, $sql)) {
+
+        // Attempt to execute the prepared statement
+        if (mysqli_stmt_execute($stmt)) {
+            $result = mysqli_stmt_get_result($stmt);
+
+            // Check number of rows in the result set
+            if (mysqli_num_rows($result) > 0) {
+                // Fetch result rows as an associative array
+                $i = 1;
+                while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                    $computerHtmlMid = $computerHtmlMid . '<tr>
+                          <th scope="row">' . $i . '</th>
+                          <td>' . $row["type"] . '</td>
+                          <td>' . $row["manufacturer"] . '</td>
+                          <td>' . $row["model"] . '</td>
+                          <td>' . $row["os"] . '</td>
+                          <td>' . $row["serialnum"] . '</td>
+                          <td>' . $row["description"] . '</td>
+                        </tr>';
+                    $i++;
+                }
+            }
+        } else {
+            echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+        }
+        mysqli_stmt_close($stmt);
+    } else {
+        echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+    }
+    return $computerHtmlUpper . $computerHtmlMid . $computerHtmlBotom;
+}
+
+
+function getMicrophoneDetail()
+{
+
+    $computerHtmlUpper = '<table class="table top20x">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Type</th>
+              <th>Manufacturer</th>
+              <th>Model</th>
+              <th>Serial No</th>
+              <th>Description</th>
+            </tr>
+          </thead><tbody>';
+    $computerHtmlMid = '';
+    $computerHtmlBotom = '
+          </tbody>
+        </table>';
+
+
+    $sql = "select r.type, m.manufacturer, m.model, m.serialnum, r.description from resources r inner join microphone m
+on m.rID = r.rId";
+    $link = getDBLink();
+
+    if ($stmt = mysqli_prepare($link, $sql)) {
+
+        // Attempt to execute the prepared statement
+        if (mysqli_stmt_execute($stmt)) {
+            $result = mysqli_stmt_get_result($stmt);
+
+            // Check number of rows in the result set
+            if (mysqli_num_rows($result) > 0) {
+                // Fetch result rows as an associative array
+                $i = 1;
+                while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                    $computerHtmlMid = $computerHtmlMid . '<tr>
+                          <th scope="row">' . $i . '</th>
+                          <td>' . $row["type"] . '</td>
+                          <td>' . $row["manufacturer"] . '</td>
+                          <td>' . $row["model"] . '</td>
+                          <td>' . $row["serialnum"] . '</td>
+                          <td>' . $row["description"] . '</td>
+                        </tr>';
+                    $i++;
+                }
+            }
+        } else {
+            echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+        }
+        mysqli_stmt_close($stmt);
+    } else {
+        echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+    }
+
+
+    return $computerHtmlUpper . $computerHtmlMid . $computerHtmlBotom;
+}
+
+function getProjectorDetail()
+{
+
+    $computerHtmlUpper = '<table class="table top20x">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Type</th>
+              <th>Manufacturer</th>
+              <th>Model</th>
+              <th>Serial No</th>
+              <th>Description</th>
+            </tr>
+          </thead><tbody>';
+    $computerHtmlMid = '';
+    $computerHtmlBotom = '
+          </tbody>
+        </table>';
+
+
+    $sql = "select r.type, p.manufacturer, p.model, p.serialnum, r.description from resources r inner join projector p
+on p.rID = r.rId";
+    $link = getDBLink();
+
+    if ($stmt = mysqli_prepare($link, $sql)) {
+
+        // Attempt to execute the prepared statement
+        if (mysqli_stmt_execute($stmt)) {
+            $result = mysqli_stmt_get_result($stmt);
+
+            // Check number of rows in the result set
+            if (mysqli_num_rows($result) > 0) {
+                // Fetch result rows as an associative array
+                $i = 1;
+                while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                    $computerHtmlMid = $computerHtmlMid . '<tr>
+                          <th scope="row">' . $i . '</th>
+                          <td>' . $row["type"] . '</td>
+                          <td>' . $row["manufacturer"] . '</td>
+                          <td>' . $row["model"] . '</td>
+                          <td>' . $row["serialnum"] . '</td>
+                          <td>' . $row["description"] . '</td>
+                        </tr>';
+                    $i++;
+                }
+            }
+        } else {
+            echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+        }
+        mysqli_stmt_close($stmt);
+    } else {
+        echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+    }
+
+
+    return $computerHtmlUpper . $computerHtmlMid . $computerHtmlBotom;
+}
+
+function getRoomDetail()
+{
+
+    $computerHtmlUpper = '<table class="table top20x">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Type</th>
+              <th>Name</th>
+              <th>Room No</th>
+              <th>Capacity</th>
+              <th>Description</th>
+            </tr>
+          </thead><tbody>';
+    $computerHtmlMid = '';
+    $computerHtmlBotom = '
+          </tbody>
+        </table>';
+
+
+    $sql = "select r.type, ro.name, ro.roomnum, ro.capacity, r.description from resources r inner join room ro
+on ro.rID = r.rId";
+    $link = getDBLink();
+
+    if ($stmt = mysqli_prepare($link, $sql)) {
+
+        // Attempt to execute the prepared statement
+        if (mysqli_stmt_execute($stmt)) {
+            $result = mysqli_stmt_get_result($stmt);
+
+            // Check number of rows in the result set
+            if (mysqli_num_rows($result) > 0) {
+                // Fetch result rows as an associative array
+                $i = 1;
+                while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                    $computerHtmlMid = $computerHtmlMid . '<tr>
+                          <th scope="row">' . $i . '</th>
+                          <td>' . $row["type"] . '</td>
+                          <td>' . $row["name"] . '</td>
+                          <td>' . $row["roomnum"] . '</td>
+                          <td>' . $row["capacity"] . '</td>
+                          <td>' . $row["description"] . '</td>
+                        </tr>';
+                    $i++;
+                }
+            }
+        } else {
+            echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+        }
+        mysqli_stmt_close($stmt);
+    } else {
+        echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+    }
+
+
+    return $computerHtmlUpper . $computerHtmlMid . $computerHtmlBotom;
+}
+
 
 function getInsertDetail($userdetail)
 {
-    $insertFirstName = " firstname = '" . $userdetail['firstname'] ."', " ;
-    $insertLastName = " lastname = '" . $userdetail['lastname'] ."', " ;
-    $insertcompanyname = " companyname = '" . $userdetail['companyname']  ."', "  ;
-    $insertsex = " sex = '" . $userdetail['sex'] . "', " ;
-    $insertemail = " email = '" . $userdetail['email']  ."', "  ;
-    $insertphone = " phone = '" . $userdetail['phone']  ."', " ;
-    $insert = $insertFirstName .$insertLastName . $insertcompanyname.$insertsex. $insertemail.$insertphone;
+    $insertFirstName = " firstname = '" . $userdetail['firstname'] . "', ";
+    $insertLastName = " lastname = '" . $userdetail['lastname'] . "', ";
+    $insertcompanyname = " companyname = '" . $userdetail['companyname'] . "', ";
+    $insertsex = " sex = '" . $userdetail['sex'] . "', ";
+    $insertemail = " email = '" . $userdetail['email'] . "', ";
+    $insertphone = " phone = '" . $userdetail['phone'] . "', ";
+    $insert = $insertFirstName . $insertLastName . $insertcompanyname . $insertsex . $insertemail . $insertphone;
 
-    $insertdId = " dId = '" . $userdetail['department'] ."', " ;
+    $insertdId = " dId = '" . $userdetail['department'] . "', ";
     if (!IsNullOrEmptyString($userdetail['department'])) {
         $insert = $insert . $insertdId;
     }
@@ -100,7 +352,7 @@ function updateUser($userdetail, $username)
 
     $insertDetail = getInsertDetail($userdetail);
 
-    $sql = "UPDATE users SET ". $insertDetail . "  where username = '" . $username . "'";
+    $sql = "UPDATE users SET " . $insertDetail . "  where username = '" . $username . "'";
     $link = getDBLink();
     if ($result = mysqli_query($link, $sql)) {
         mysqli_close($link);
