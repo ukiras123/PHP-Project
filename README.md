@@ -5,7 +5,7 @@
 - Install MAMP
 - Copy this project to MAMP/htdocs folder
 - Start the server
-- Run schema.sql for database setup
+- Run database/schema.sql for database setup
 - Change DB credential in app/utilities/config.php
 - Change DB credential in app/utilities/credential.php
 - Hit: http://localhost:8080/
