@@ -108,7 +108,8 @@ function getResourceDropdown()
 function getComputerDetails($query, $withAction = false)
 {
     $addTh = $withAction == true ? "<th>Action</th>" : "";
-    $computerHtmlUpper = '<table class="table top20x">
+    $computerHtmlUpper = '<table class="table top20x table-responsive">
+      <caption>Inventory for Computer</caption>
           <thead>
             <tr>
               <th>#</th>
@@ -169,7 +170,8 @@ function getComputerDetails($query, $withAction = false)
 function getMicrophoneDetail($query, $withAction = false)
 {
     $addTh = $withAction == true ? "<th>Action</th>" : "";
-    $computerHtmlUpper = '<table class="table top20x">
+    $computerHtmlUpper = '<table class="table top20x table-responsive">
+      <caption>Inventory for Microphone</caption>
           <thead>
             <tr>
               <th>#</th>
@@ -229,7 +231,8 @@ function getMicrophoneDetail($query, $withAction = false)
 function getProjectorDetail($query, $withAction = false)
 {
     $addTh = $withAction == true ? "<th>Action</th>" : "";
-    $computerHtmlUpper = '<table class="table top20x">
+    $computerHtmlUpper = '<table class="table top20x table-responsive">
+      <caption>Inventory for Projector</caption>
           <thead>
             <tr>
               <th>#</th>
@@ -289,7 +292,8 @@ function getProjectorDetail($query, $withAction = false)
 function getRoomDetail($query, $withAction = false)
 {
     $addTh = $withAction == true ? "<th>Action</th>" : "";
-    $computerHtmlUpper = '<table class="table top20x">
+    $computerHtmlUpper = '<table class="table top20x table-responsive">
+      <caption>Inventory for Room</caption>
           <thead>
             <tr>
               <th>#</th>
