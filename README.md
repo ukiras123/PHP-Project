@@ -6,8 +6,9 @@
 - Copy this project to MAMP/htdocs folder
 - Start the server
 - Run schema.sql for database setup
-- Change DB credential in app/userlogin/config.php
-- http://localhost:8080/
+- Change DB credential in app/utilities/config.php
+- Change DB credential in app/utilities/credential.php
+- Hit: http://localhost:8080/
 
 **How to build and run in Docker**
 - docker build -f Dockerfile -t myapp .
