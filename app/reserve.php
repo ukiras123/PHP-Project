@@ -74,7 +74,7 @@ $content = '
  </div>
  
  <div id="fail" class="alert alert-danger" hidden>
-        <strong>Failed!</strong> Something went wrong! Please try again.
+        <strong>Failed!</strong> Something went wrong! Please search for available resources and try again.
  </div>
     
 <form action="" method="post"> 
