@@ -14,6 +14,7 @@ $indexActive = "";
 $additionalHead = "";
 $content2 = "";
 
+$current_date = gmdate("Y-m-d\TH:i:s");
 session_start();
 // If session variable is not set it will redirect to login page
 if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
@@ -28,10 +29,11 @@ if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
 $additionalHead = '<link rel="stylesheet" href="assets/style/reserve.css">';
 
 $startDate = $endDate = $computerselected = $microphoneselected = $projectorselected = $roomselected = "";
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $startDate = isset($_POST["startDate"]) ?  'value = "' . $_POST["startDate"].'"' : "";
-    $endDate =   isset($_POST["endDate"]) ? 'value = "' .$_POST["endDate"].'"' : "";
+$startDate = isset($_POST["startDate"]) ?  'value = "' . $_POST["startDate"].'"' : 'value = "' . $current_date.'"';
+$endDate =   isset($_POST["endDate"]) ? 'value = "' .$_POST["endDate"].'"' : 'value = "' . $current_date.'"';
 
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     setcookie("startDate", $_POST["startDate"], time() + (86400 * 30), "/"); // 86400 = 1 day
     setcookie("endDate", $_POST["endDate"], time() + (86400 * 30), "/"); // 86400 = 1 day
 
@@ -91,12 +93,12 @@ $content = '
      </div>
     <div class="form-group col-xs-4 col-md-4">
         <label for="startDate" class="control-label">Select Start Date</label>
-      <input required type="datetime-local" '.  $startDate .' class="form-control" id="startDate" name="startDate">
+      <input required   type="datetime-local" '.  $startDate .' class="form-control" id="startDate" name="startDate">
     </div>
     
     <div class="form-group col-xs-4 col-md-4">
         <label for="endDate" class="control-label">Select End Date</label>
-      <input required type="datetime-local" '.  $endDate .'class="form-control" id="endDate" name="endDate">
+      <input required  type="datetime-local" '.  $endDate .'class="form-control" id="endDate" name="endDate">
     </div>
     
    
