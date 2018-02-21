@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        <form action="utilities/profileupdate.php" method="post" class="center" style="width: 700px">
+
+            <div class="row">
+
+                <div class="form-group col-xs-4 col-md-4">
+
+                    <div class="form-group" id="firstname">
+                        <label>First Name</label>
+                        <input type="text" required name="firstname" id="firstnameinput" class="form-control"
+                               value="' . $db_firstname . '">
+                    </div>
+
+                </div>
+
+                <div class="form-group col-xs-4 col-md-4">
+
+                    <div class="form-group" id="lastname">
+                        <label>Last Name</label>
+                        <input type="text" required name="lastname" id="lastnameinput" class="form-control"
+                               value="' . $db_lastname . '">
+                    </div>
+                </div>
+
+                <div class="form-group col-xs-4 col-md-4">
+
+                    <div class="form-group" id="companyname"
+                    ' . $companyhidden . ' >
+                    <label>Company Name</label>
+                    <input type="text" name="companyname" id="companynameinput" class="form-control"
+                           value="' . $db_companyname . '">
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="form-group col-xs-4 col-md-4">
+
+                    <div class="form-group" id="sex">
+                        <label for="sexinput">Sex</label>
+                        <select class="form-control" name="sex" id="sexinput">
+                            <option
+                            ' . $maleselected . ' value = "male">Male</option>
+                            <option
+                            ' . $femaleselected . ' value = "female">Female</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group col-xs-4 col-md-4">
+
+                    <div class="form-group" id="email">
+                        <label>Email</label>
+                        <input type="email"
+                               pattern="[a-zA-Z0-9!#$%&\'*+\/=?^_`{|}~.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*"
+                               name="email" id="emailinput" class="form-control" value="' . $db_email . '">
+                    </div>
+
+                </div>
+
+                <div class="form-group col-xs-4 col-md-4">
+
+                    <div class="form-group" id="phone">
+                        <label>Phone [xxx-xxx-xxxx]</label>
+                        <input type="tel" pattern="^\d{3}-\d{3}-\d{4}$" name="phone" id="phoneinput"
+                               class="form-control"
+                               value="' . $db_phone . '">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+        </form>
+    </title>
+</head>
+<body>
+
+</body>
+</html>

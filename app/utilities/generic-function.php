@@ -1,7 +1,7 @@
 <?php
 
 
-function replaceFromHaystack($haystack,$needle,$replace)
+function replaceFromHaystack($haystack, $needle, $replace)
 {
     $pos = strpos($haystack, $needle);
     $newstring = $haystack;
@@ -30,7 +30,14 @@ function getDBLink()
 
 function getUserInfo($username)
 {
-    $sql = "SELECT username, type, firstname, lastname, companyname, sex, email, phone, profile FROM users WHERE username = '" . $username . "'";
+    $type = $_SESSION['type'];
+
+    if ($type == 'employee') {
+        $sql = "SELECT username, userTypeId, firstname, lastname, '', sex, email, phone, profile FROM User WHERE username  = '" . $username . "'";
+    } else {
+        $sql = "SELECT username, userTypeId, firstname, lastname, companyname, sex, email, phone, profile FROM User u 
+                inner join Company c on u.companyID = c.companyID where username = '" . $username . "'";
+    }
     $link = getDBLink();
     $return_arr = [];
     if ($result = mysqli_query($link, $sql)) {
@@ -56,33 +63,27 @@ function getUserInfo($username)
     return $return_arr;
 }
 
-function getDepartmentInfo()
+function getCompanyInfo($companyId)
 {
-    $sql = "SELECT dId, departmentname FROM department";
+    $sql = "SELECT companyName, companyAddress, companyPhone, notes FROM Company WHERE companyID  = '" . $companyId . "'";
     $link = getDBLink();
-    $departmentHtml = "";
-
-    if ($stmt = mysqli_prepare($link, $sql)) {
-
-        // Attempt to execute the prepared statement
-        if (mysqli_stmt_execute($stmt)) {
-            $result = mysqli_stmt_get_result($stmt);
-
-            // Check number of rows in the result set
-            if (mysqli_num_rows($result) > 0) {
-                // Fetch result rows as an associative array
-                while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-                    $departmentHtml = $departmentHtml . "<option value = " . $row["dId"] . "> " . $row["departmentname"] . "</option>";
-                }
-            }
-        } else {
-            echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+    $return_arr = [];
+    if ($result = mysqli_query($link, $sql)) {
+        while ($row = mysqli_fetch_row($result)) {
+            $return_arr = [
+                "companyName" => $row[0],
+                "companyAddress" => $row[1],
+                "companyPhone" => $row[2],
+                "notes" => $row[3],
+            ];
         }
-        mysqli_stmt_close($stmt);
+        mysqli_free_result($result);
+        mysqli_close($link);
     } else {
-        echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+        echo "Error during DB call getCompanyInfo()" . var_dump($sql);
+        return null;
     }
-    return $departmentHtml;
+    return $return_arr;
 }
 
 
@@ -119,7 +120,7 @@ function getComputerDetails($query, $withAction = false)
               <th>OS</th>
               <th>Serial No</th>
               <th>Description</th>
-              '.$addTh. '
+              ' . $addTh . '
             </tr>
           </thead><tbody>';
     $computerHtmlMid = '';
@@ -142,7 +143,7 @@ function getComputerDetails($query, $withAction = false)
                 // Fetch result rows as an associative array
                 $i = 1;
                 while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-                    $addTd = $withAction == true ? '<td><button id="action" name="action" type="submit" class="btn btn-warning action" value="'.$row["rId"].'">Book</button></td>' : "";
+                    $addTd = $withAction == true ? '<td><button id="action" name="action" type="submit" class="btn btn-warning action" value="' . $row["rId"] . '">Book</button></td>' : "";
                     $computerHtmlMid = $computerHtmlMid . '<tr>
                           <th scope="row">' . $i . '</th>
                           <td>' . $row["type"] . '</td>
@@ -151,7 +152,7 @@ function getComputerDetails($query, $withAction = false)
                           <td>' . $row["os"] . '</td>
                           <td>' . $row["serialnum"] . '</td>
                           <td>' . $row["description"] . '</td>
-                          '. $addTd . '
+                          ' . $addTd . '
                         </tr>';
                     $i++;
                 }
@@ -180,7 +181,7 @@ function getMicrophoneDetail($query, $withAction = false)
               <th>Model</th>
               <th>Serial No</th>
               <th>Description</th>
-              '.$addTh. '
+              ' . $addTh . '
             </tr>
           </thead><tbody>';
     $computerHtmlMid = '';
@@ -203,7 +204,7 @@ function getMicrophoneDetail($query, $withAction = false)
                 // Fetch result rows as an associative array
                 $i = 1;
                 while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-                    $addTd = $withAction == true ? '<td><button name="action" type="submit" class="btn btn-warning action" value="'.$row["rId"].'">Book</button></td>' : "";
+                    $addTd = $withAction == true ? '<td><button name="action" type="submit" class="btn btn-warning action" value="' . $row["rId"] . '">Book</button></td>' : "";
                     $computerHtmlMid = $computerHtmlMid . '<tr>
                           <th scope="row">' . $i . '</th>
                           <td>' . $row["type"] . '</td>
@@ -211,7 +212,7 @@ function getMicrophoneDetail($query, $withAction = false)
                           <td>' . $row["model"] . '</td>
                           <td>' . $row["serialnum"] . '</td>
                           <td>' . $row["description"] . '</td>
-                          '. $addTd . '
+                          ' . $addTd . '
                         </tr>';
                     $i++;
                 }
@@ -241,7 +242,7 @@ function getProjectorDetail($query, $withAction = false)
               <th>Model</th>
               <th>Serial No</th>
               <th>Description</th>
-              '.$addTh. '
+              ' . $addTh . '
             </tr>
           </thead><tbody>';
     $computerHtmlMid = '';
@@ -264,7 +265,7 @@ function getProjectorDetail($query, $withAction = false)
                 // Fetch result rows as an associative array
                 $i = 1;
                 while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-                    $addTd = $withAction == true ? '<td><button id="action" name="action" type="submit" class="btn btn-warning action" value="'.$row["rId"].'">Book</button></td>' : "";
+                    $addTd = $withAction == true ? '<td><button id="action" name="action" type="submit" class="btn btn-warning action" value="' . $row["rId"] . '">Book</button></td>' : "";
                     $computerHtmlMid = $computerHtmlMid . '<tr>
                           <th scope="row">' . $i . '</th>
                           <td>' . $row["type"] . '</td>
@@ -272,7 +273,7 @@ function getProjectorDetail($query, $withAction = false)
                           <td>' . $row["model"] . '</td>
                           <td>' . $row["serialnum"] . '</td>
                           <td>' . $row["description"] . '</td>
-                          '. $addTd . '
+                          ' . $addTd . '
                         </tr>';
                     $i++;
                 }
@@ -302,7 +303,7 @@ function getRoomDetail($query, $withAction = false)
               <th>Room No</th>
               <th>Capacity</th>
               <th>Description</th>
-              '.$addTh. '
+              ' . $addTh . '
             </tr>
           </thead><tbody>';
     $computerHtmlMid = '';
@@ -326,7 +327,7 @@ function getRoomDetail($query, $withAction = false)
                 // Fetch result rows as an associative array
                 $i = 1;
                 while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-                    $addTd = $withAction == true ? '<td><button id="action" name="action" type="submit" class="btn btn-warning action" value="'.$row["rId"].'">Book</button></td>' : "";
+                    $addTd = $withAction == true ? '<td><button id="action" name="action" type="submit" class="btn btn-warning action" value="' . $row["rId"] . '">Book</button></td>' : "";
                     $computerHtmlMid = $computerHtmlMid . '<tr>
                           <th scope="row">' . $i . '</th>
                           <td>' . $row["type"] . '</td>
@@ -334,7 +335,7 @@ function getRoomDetail($query, $withAction = false)
                           <td>' . $row["roomnum"] . '</td>
                           <td>' . $row["capacity"] . '</td>
                           <td>' . $row["description"] . '</td>
-                          '. $addTd . '
+                          ' . $addTd . '
                         </tr>';
                     $i++;
                 }
@@ -356,27 +357,32 @@ function getInsertDetail($userdetail)
 {
     $insertFirstName = " firstname = '" . $userdetail['firstname'] . "', ";
     $insertLastName = " lastname = '" . $userdetail['lastname'] . "', ";
-    $insertcompanyname = " companyname = '" . $userdetail['companyname'] . "', ";
     $insertsex = " sex = '" . $userdetail['sex'] . "', ";
     $insertemail = " email = '" . $userdetail['email'] . "', ";
     $insertphone = " phone = '" . $userdetail['phone'] . "', ";
-    $insert = $insertFirstName . $insertLastName . $insertcompanyname . $insertsex . $insertemail . $insertphone;
-
-    $insertdId = " dId = '" . $userdetail['department'] . "', ";
-    if (!IsNullOrEmptyString($userdetail['department'])) {
-        $insert = $insert . $insertdId;
-    }
+    $insert = $insertFirstName . $insertLastName . $insertsex . $insertemail . $insertphone;
     $insert = substr($insert, 0, -2);
     return $insert . ' ';
 }
 
+function getCompanyInsertDetail($companydetail)
+{
+    $insertCompanyName = " companyName = '" . $companydetail['companyName'] . "', ";
+    $insertCompanyAddress = " companyAddress = '" . $companydetail['companyAddress'] . "', ";
+    $insertCompanyPhone = " companyPhone = '" . $companydetail['companyPhone'] . "', ";
+    $insertNotes = " notes = '" . $companydetail['notes'] . "', ";
+
+    $insert = $insertCompanyName . $insertCompanyAddress . $insertCompanyPhone . $insertNotes;
+    $insert = substr($insert, 0, -2);
+    return $insert . ' ';
+}
+
+
 function updateUser($userdetail, $username)
 {
-
-
     $insertDetail = getInsertDetail($userdetail);
 
-    $sql = "UPDATE users SET " . $insertDetail . "  where username = '" . $username . "'";
+    $sql = "UPDATE User SET " . $insertDetail . "  where username = '" . $username . "'";
     $link = getDBLink();
     if ($result = mysqli_query($link, $sql)) {
         mysqli_close($link);
@@ -387,9 +393,25 @@ function updateUser($userdetail, $username)
     }
 }
 
+function updateCompany($companyDetail, $companyId)
+{
+    $insertDetail = getCompanyInsertDetail($companyDetail);
+
+    $sql = "UPDATE Company SET " . $insertDetail . "  where companyID = '" . $companyId . "'";
+    $link = getDBLink();
+    if ($result = mysqli_query($link, $sql)) {
+        mysqli_close($link);
+        return true;
+    } else {
+        echo "Error during DB call updateCompany()" . var_dump($sql);
+        return false;
+    }
+}
+
+
 function updateProfilePic($imagelocation, $username)
 {
-    $sql = "UPDATE users SET profile = '" . $imagelocation . "'  where username = '" . $username . "'";
+    $sql = "UPDATE User SET profile = '" . $imagelocation . "'  where username = '" . $username . "'";
     $link = getDBLink();
     if ($result = mysqli_query($link, $sql)) {
         mysqli_close($link);
@@ -402,7 +424,7 @@ function updateProfilePic($imagelocation, $username)
 
 function getProfilePic($username)
 {
-    $sql = "select profile from users where username = '" . $username . "'";
+    $sql = "select profile from User where username = '" . $username . "'";
     $link = getDBLink();
     $profile = "";
     if ($result = mysqli_query($link, $sql)) {
