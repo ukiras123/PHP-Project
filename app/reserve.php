@@ -37,26 +37,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     setcookie("startDate", $_POST["startDate"], time() + (86400 * 30), "/"); // 86400 = 1 day
     setcookie("endDate", $_POST["endDate"], time() + (86400 * 30), "/"); // 86400 = 1 day
 
+    #TODO- Fix These
     if(isset($_POST["type"])) {
         if ($_POST["type"] == "computer") {
             $searchcomputer = replaceFromHaystack($searchcomputer, "?", $_POST["endDate"]);
             $searchcomputer = replaceFromHaystack($searchcomputer, "?", $_POST["startDate"]);
-            $content2 = getComputerDetails($searchcomputer, true);
+            $content2 = getComputerDetails($allcomputerdetail, true);
             $computerselected = 'selected="selected"';
         } elseif (isset($_POST["type"]) && $_POST["type"] == "microphone") {
             $searchmicrophone = replaceFromHaystack($searchmicrophone, "?", $_POST["endDate"]);
             $searchmicrophone = replaceFromHaystack($searchmicrophone, "?", $_POST["startDate"]);
-            $content2 = getMicrophoneDetail($searchmicrophone, true);
+            $content2 = getMicrophoneDetail($allmicrophonedetail, true);
             $microphoneselected = 'selected="selected"';
         } elseif (isset($_POST["type"]) && $_POST["type"] == "room") {
             $searchroom = replaceFromHaystack($searchroom, "?", $_POST["endDate"]);
             $searchroom = replaceFromHaystack($searchroom, "?", $_POST["startDate"]);
-            $content2 = getRoomDetail($searchroom, true);
+            $content2 = getRoomDetail($allroomdetail, true);
             $roomselected = 'selected="selected"';
         } elseif (isset($_POST["type"]) && $_POST["type"] == "projector") {
             $searchprojector = replaceFromHaystack($searchprojector, "?", $_POST["endDate"]);
             $searchprojector = replaceFromHaystack($searchprojector, "?", $_POST["startDate"]);
-            $content2 = getProjectorDetail($searchprojector, true);
+            $content2 = getProjectorDetail($allprojectordetail, true);
             $projectorselected = 'selected="selected"';
         }
     }
@@ -67,6 +68,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 $content = '
+ <div id="todo" class="alert alert-danger" hidden>
+        <strong>Failed!</strong> TODO : Reserve functionality is yet to be implemented.
+ </div>
+ 
 <div id="loader" class="loader center" hidden></div>
 
 <div id="pass" class="alert alert-success" hidden>

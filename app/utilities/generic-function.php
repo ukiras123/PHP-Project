@@ -114,12 +114,10 @@ function getComputerDetails($query, $withAction = false)
           <thead>
             <tr>
               <th>#</th>
-              <th>Type</th>
               <th>Manufacturer</th>
               <th>Model</th>
               <th>OS</th>
               <th>Serial No</th>
-              <th>Description</th>
               ' . $addTh . '
             </tr>
           </thead><tbody>';
@@ -143,15 +141,13 @@ function getComputerDetails($query, $withAction = false)
                 // Fetch result rows as an associative array
                 $i = 1;
                 while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-                    $addTd = $withAction == true ? '<td><button id="action" name="action" type="submit" class="btn btn-warning action" value="' . $row["rId"] . '">Book</button></td>' : "";
+                    $addTd = $withAction == true ? '<td><button id="action" name="action" type="submit" class="btn btn-warning action" value="' . $row["resourceID"] . '">Book</button></td>' : "";
                     $computerHtmlMid = $computerHtmlMid . '<tr>
                           <th scope="row">' . $i . '</th>
-                          <td>' . $row["type"] . '</td>
                           <td>' . $row["manufacturer"] . '</td>
                           <td>' . $row["model"] . '</td>
                           <td>' . $row["os"] . '</td>
-                          <td>' . $row["serialnum"] . '</td>
-                          <td>' . $row["description"] . '</td>
+                          <td>' . $row["serialNum"] . '</td>
                           ' . $addTd . '
                         </tr>';
                     $i++;
@@ -176,11 +172,9 @@ function getMicrophoneDetail($query, $withAction = false)
           <thead>
             <tr>
               <th>#</th>
-              <th>Type</th>
               <th>Manufacturer</th>
               <th>Model</th>
               <th>Serial No</th>
-              <th>Description</th>
               ' . $addTh . '
             </tr>
           </thead><tbody>';
@@ -204,14 +198,12 @@ function getMicrophoneDetail($query, $withAction = false)
                 // Fetch result rows as an associative array
                 $i = 1;
                 while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-                    $addTd = $withAction == true ? '<td><button name="action" type="submit" class="btn btn-warning action" value="' . $row["rId"] . '">Book</button></td>' : "";
+                    $addTd = $withAction == true ? '<td><button name="action" type="submit" class="btn btn-warning action" value="' . $row["resourceID"] . '">Book</button></td>' : "";
                     $computerHtmlMid = $computerHtmlMid . '<tr>
                           <th scope="row">' . $i . '</th>
-                          <td>' . $row["type"] . '</td>
                           <td>' . $row["manufacturer"] . '</td>
                           <td>' . $row["model"] . '</td>
-                          <td>' . $row["serialnum"] . '</td>
-                          <td>' . $row["description"] . '</td>
+                          <td>' . $row["serialNum"] . '</td>
                           ' . $addTd . '
                         </tr>';
                     $i++;
@@ -237,11 +229,10 @@ function getProjectorDetail($query, $withAction = false)
           <thead>
             <tr>
               <th>#</th>
-              <th>Type</th>
               <th>Manufacturer</th>
               <th>Model</th>
               <th>Serial No</th>
-              <th>Description</th>
+              <th>Technology</th>
               ' . $addTh . '
             </tr>
           </thead><tbody>';
@@ -265,14 +256,13 @@ function getProjectorDetail($query, $withAction = false)
                 // Fetch result rows as an associative array
                 $i = 1;
                 while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-                    $addTd = $withAction == true ? '<td><button id="action" name="action" type="submit" class="btn btn-warning action" value="' . $row["rId"] . '">Book</button></td>' : "";
+                    $addTd = $withAction == true ? '<td><button id="action" name="action" type="submit" class="btn btn-warning action" value="' . $row["resourceID"] . '">Book</button></td>' : "";
                     $computerHtmlMid = $computerHtmlMid . '<tr>
                           <th scope="row">' . $i . '</th>
-                          <td>' . $row["type"] . '</td>
                           <td>' . $row["manufacturer"] . '</td>
                           <td>' . $row["model"] . '</td>
-                          <td>' . $row["serialnum"] . '</td>
-                          <td>' . $row["description"] . '</td>
+                          <td>' . $row["serialNum"] . '</td>
+                          <td>' . $row["technology"] . '</td>
                           ' . $addTd . '
                         </tr>';
                     $i++;
@@ -298,7 +288,6 @@ function getRoomDetail($query, $withAction = false)
           <thead>
             <tr>
               <th>#</th>
-              <th>Type</th>
               <th>Name</th>
               <th>Room No</th>
               <th>Capacity</th>
@@ -327,12 +316,11 @@ function getRoomDetail($query, $withAction = false)
                 // Fetch result rows as an associative array
                 $i = 1;
                 while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-                    $addTd = $withAction == true ? '<td><button id="action" name="action" type="submit" class="btn btn-warning action" value="' . $row["rId"] . '">Book</button></td>' : "";
+                    $addTd = $withAction == true ? '<td><button id="action" name="action" type="submit" class="btn btn-warning action" value="' . $row["resourceID"] . '">Book</button></td>' : "";
                     $computerHtmlMid = $computerHtmlMid . '<tr>
                           <th scope="row">' . $i . '</th>
-                          <td>' . $row["type"] . '</td>
                           <td>' . $row["name"] . '</td>
-                          <td>' . $row["roomnum"] . '</td>
+                          <td>' . $row["roomNum"] . '</td>
                           <td>' . $row["capacity"] . '</td>
                           <td>' . $row["description"] . '</td>
                           ' . $addTd . '
