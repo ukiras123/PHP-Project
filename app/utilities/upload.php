@@ -21,7 +21,7 @@ require_once 'config.php';
 // Validate credentials
 if (!empty($uploadfile)) {
     // Prepare a select statement
-    $sql = "UPDATE users SET profile = ? where username = ?";
+    $sql = "UPDATE User SET profile = ? where username = ?";
 
     if ($stmt = mysqli_prepare($link, $sql)) {
         // Bind variables to the prepared statement as parameters
