@@ -290,7 +290,7 @@ VALUES
 
 #View -----------------------
 CREATE VIEW v_rental AS
-  SELECT c.userID, c.firstName, c.lastName, r.rentalID, rs.resourceID, rs.resourceTypeID, rt.resource_type,
+  SELECT c.userID, c.username, c.firstName, c.lastName, r.rentalID, rs.resourceID, rs.resourceTypeID, rt.resource_type,
     r.start_date, r.end_date, r.add_date
   FROM Rental r
     JOIN Rental_Detail rd

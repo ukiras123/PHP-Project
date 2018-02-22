@@ -109,8 +109,9 @@ function getResourceDropdown()
 function getComputerDetails($query, $withAction = false)
 {
     $addTh = $withAction == true ? "<th>Action</th>" : "";
+    $caption = $withAction == true ? "Available Computers" : "Inventory for Computers";
     $computerHtmlUpper = '<table class="table top20x table-responsive">
-      <caption>Inventory for Computer</caption>
+      <caption>'.$caption.'</caption>
           <thead>
             <tr>
               <th>#</th>
@@ -167,8 +168,9 @@ function getComputerDetails($query, $withAction = false)
 function getMicrophoneDetail($query, $withAction = false)
 {
     $addTh = $withAction == true ? "<th>Action</th>" : "";
+    $caption = $withAction == true ? "Available Microphones" : "Inventory for Microphones";
     $computerHtmlUpper = '<table class="table top20x table-responsive">
-      <caption>Inventory for Microphone</caption>
+      <caption>'.$caption.'</caption>
           <thead>
             <tr>
               <th>#</th>
@@ -224,8 +226,9 @@ function getMicrophoneDetail($query, $withAction = false)
 function getProjectorDetail($query, $withAction = false)
 {
     $addTh = $withAction == true ? "<th>Action</th>" : "";
+    $caption = $withAction == true ? "Available Projectors" : "Inventory for Projectors";
     $computerHtmlUpper = '<table class="table top20x table-responsive">
-      <caption>Inventory for Projector</caption>
+      <caption>'.$caption.'</caption>
           <thead>
             <tr>
               <th>#</th>
@@ -283,8 +286,9 @@ function getProjectorDetail($query, $withAction = false)
 function getRoomDetail($query, $withAction = false)
 {
     $addTh = $withAction == true ? "<th>Action</th>" : "";
+    $caption = $withAction == true ? "Available Rooms" : "Inventory for Rooms";
     $computerHtmlUpper = '<table class="table top20x table-responsive">
-      <caption>Inventory for Room</caption>
+      <caption>'.$caption.'</caption>
           <thead>
             <tr>
               <th>#</th>
