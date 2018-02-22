@@ -14,13 +14,13 @@ $allmicrophonedetail = "select * from Microphone";
 $allprojectordetail = "select * from Projector";
 
 
-$searchcomputer = "select * from Computer";
+$searchcomputer = "CALL available_computers(CAST('?' AS DATETIME), CAST('?' AS DATETIME))";
 
-$searchmicrophone = "select * from Microphone";
+$searchmicrophone = "CALL available_microphones(CAST('?' AS DATETIME), CAST('?' AS DATETIME))";
 
-$searchprojector = "select * from Projector";
+$searchprojector = "CALL available_projectors(CAST('?' AS DATETIME), CAST('?' AS DATETIME))";
 
-$searchroom = "select * from Room";
+$searchroom = "CALL available_rooms(CAST('?' AS DATETIME), CAST('?' AS DATETIME))";
 
 
 $bookresource ="insert into user_resources

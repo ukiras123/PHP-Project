@@ -287,6 +287,131 @@ VALUES
 
 #select * from UserType
 
+
+#View -----------------------
+CREATE VIEW v_rental AS
+  SELECT c.userID, c.firstName, c.lastName, r.rentalID, rs.resourceID, rs.resourceTypeID, rt.resource_type,
+    r.start_date, r.end_date, r.add_date
+  FROM Rental r
+    JOIN Rental_Detail rd
+      ON r.rentalID = rd.rentalID
+    JOIN `User` c
+      ON r.userID = c.userID
+    JOIN Resource rs
+      ON rd.resourceID = rs.resourceID
+    JOIN ResourceType RT
+      ON rs.resourceTypeID = rt.resourceTypeID
+  ORDER BY r.rentalID, rs.resourceID;
+
+# Store Proc ---------------------------------------------------------------------
+
+# Checking for available rooms for given time
+DELIMITER //
+
+CREATE PROCEDURE app.available_rooms (IN fromDate DATETIME, IN toDate DATETIME) ##2 params
+LANGUAGE SQL
+DETERMINISTIC
+  COMMENT 'Sproc to return all avialable rooms given a start and end date'
+  BEGIN
+
+    ##code here
+    SELECT *
+    FROM Room
+    WHERE resourceID NOT IN
+          (
+            SELECT resourceID
+            FROM v_rental
+            WHERE resourceTypeID = 3 ##rooms
+                  AND fromDate BETWEEN start_date AND end_date
+                  AND toDate BETWEEN start_date AND end_date
+          )
+    ORDER BY roomNum;
+
+
+  END// ##to here
+
+##try it out
+# CALL available_rooms(CAST('2018-02-20 10:00:00' AS DATETIME), CAST('2018-02-20 12:00:00' AS DATETIME))
+
+# Checking for available computer for given time
+DELIMITER //
+
+CREATE PROCEDURE app.available_computers (IN fromDate DATETIME, IN toDate DATETIME) ##2 params
+LANGUAGE SQL
+DETERMINISTIC
+  COMMENT 'Sproc to return all avialable computer given a start and end date'
+  BEGIN
+
+    ##code here
+    SELECT *
+    FROM Computer
+    WHERE resourceID NOT IN
+          (
+            SELECT resourceID
+            FROM v_rental
+            WHERE resourceTypeID = 1 ##computer
+                  AND fromDate BETWEEN start_date AND end_date
+                  AND toDate BETWEEN start_date AND end_date
+          )
+    ORDER BY manufacturer;
+
+
+  END// ##to here
+
+
+# available projector
+DELIMITER //
+
+CREATE PROCEDURE app.available_projectors (IN fromDate DATETIME, IN toDate DATETIME) ##2 params
+LANGUAGE SQL
+DETERMINISTIC
+  COMMENT 'Sproc to return all avialable projector given a start and end date'
+  BEGIN
+
+    ##code here
+    SELECT *
+    FROM Projector
+    WHERE resourceID NOT IN
+          (
+            SELECT resourceID
+            FROM v_rental
+            WHERE resourceTypeID = 2 ##projector
+                  AND fromDate BETWEEN start_date AND end_date
+                  AND toDate BETWEEN start_date AND end_date
+          )
+    ORDER BY manufacturer;
+
+
+  END// ##to here
+
+# available microphones
+DELIMITER //
+
+CREATE PROCEDURE app.available_microphones (IN fromDate DATETIME, IN toDate DATETIME) ##2 params
+LANGUAGE SQL
+DETERMINISTIC
+  COMMENT 'Sproc to return all avialable microphones given a start and end date'
+  BEGIN
+
+    ##code here
+    SELECT *
+    FROM Microphone
+    WHERE resourceID NOT IN
+          (
+            SELECT resourceID
+            FROM v_rental
+            WHERE resourceTypeID = 4 ##microphone
+                  AND fromDate BETWEEN start_date AND end_date
+                  AND toDate BETWEEN start_date AND end_date
+          )
+    ORDER BY manufacturer;
+
+
+  END// ##to here
+
+
+
+
 ##---------------------------Test Date-----------------------------
 
 
