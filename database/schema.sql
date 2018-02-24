@@ -385,7 +385,7 @@ CREATE VIEW v_rental AS
       ON r.userID = c.userID
     JOIN Resource rs
       ON rd.resourceID = rs.resourceID
-    JOIN ResourceType RT
+    JOIN ResourceType rt
       ON rs.resourceTypeID = rt.resourceTypeID
   ORDER BY r.rentalID, rs.resourceID;
 
