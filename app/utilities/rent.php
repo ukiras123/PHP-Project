@@ -64,7 +64,7 @@ if (!isset($aResult['error'])) {
         $aResult['result'] = "success";
     } else {
         setcookie("bookSuccess", false, time() + (86400 * 30), "/"); // 86400 = 1 day
-        $aResult['error'] = "failure";
+        $aResult['error'] = "failure" . $sql;
     }
     echo json_encode($aResult);
 

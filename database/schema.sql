@@ -524,7 +524,7 @@ DETERMINISTIC
     IF ret THEN
 
       ##find type ID
-      SET rTypeID = (SELECT DISTINCT resourceTypeID FROM resource WHERE resourceID = rID);
+      SET rTypeID = (SELECT DISTINCT resourceTypeID FROM Resource WHERE resourceID = rID);
 
       ##check available
       SET ret = (
@@ -590,7 +590,7 @@ DETERMINISTIC
       IF ret THEN
 
         ##find type ID
-        SET rTypeID = (SELECT DISTINCT resourceTypeID FROM resource WHERE resourceID = new_resID);
+        SET rTypeID = (SELECT DISTINCT resourceTypeID FROM Resource WHERE resourceID = new_resID);
         SET fromDate = (SELECT start_date FROM Rental WHERE rentalID = rentID);
         SET toDate = (SELECT end_date FROM Rental WHERE rentalID = rentID);
 
