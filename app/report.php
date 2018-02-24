@@ -1,4 +1,8 @@
 <?php
+
+require_once 'utilities/generic-function.php';
+require_once 'utilities/query.php';
+
 $title = "Report";
 $reserve_rent = "";
 $name = "";
@@ -21,6 +25,12 @@ if(!isset($_SESSION['username']) || empty($_SESSION['username'])){
     $_SESSION['type'] == 'e' ? $title = "Reserve" : "Rent";
     $nameWthLogo = '<span class="glyphicon glyphicon-user"></span>' ."&nbsp;&nbsp;&nbsp;". $_SESSION['username'];
 }
+
+
+
+
+$content2 = getReport($report);
+
 
 include 'template.php';
 

@@ -406,6 +406,64 @@ function getRoomDetail($query, $withAction = false)
 }
 
 
+
+
+
+function getReport($report)
+{
+    $caption = "Usage Report";
+    $computerHtmlUpper = '<table class="table top20x table-responsive">
+      <caption>'.$caption.'</caption>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Resource ID</th>
+              <th>Total Rentals</th>
+            </tr>
+          </thead><tbody>';
+    $computerHtmlMid = '';
+    $computerHtmlBotom = '
+          </tbody>
+        </table>';
+
+
+    $sql = $report;
+
+    $link = getDBLink();
+
+    if ($stmt = mysqli_prepare($link, $sql)) {
+
+        // Attempt to execute the prepared statement
+        if (mysqli_stmt_execute($stmt)) {
+            $result = mysqli_stmt_get_result($stmt);
+
+            // Check number of rows in the result set
+            if (mysqli_num_rows($result) > 0) {
+                // Fetch result rows as an associative array
+                $i = 1;
+                while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                    $computerHtmlMid = $computerHtmlMid . '<tr>
+                          <th scope="row">' . $i . '</th>
+                          <td>' . $row["resourceID"] . '</td>
+                          <td>' . $row["numRentals"] . '</td>
+                        </tr>';
+                    $i++;
+                }
+            }
+        } else {
+            echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+        }
+        mysqli_stmt_close($stmt);
+    } else {
+        echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+    }
+
+
+    return $computerHtmlUpper . $computerHtmlMid . $computerHtmlBotom;
+}
+
+
+
 function getInsertDetail($userdetail)
 {
     $insertFirstName = " firstname = '" . $userdetail['firstname'] . "', ";

@@ -19,6 +19,7 @@ $('.action').click(function() {
                 $("#pass").hide();
                 $("#pass").fadeIn(1000);
                 $("#fail").fadeOut(1000);
+                location.reload();
             }
             else {
                 $("#loader").hide();
