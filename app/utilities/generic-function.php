@@ -412,19 +412,31 @@ function getRoomDetail($query, $withAction = false)
 function getReport($report)
 {
     $caption = "Usage Report";
-    $computerHtmlUpper = '<table class="table top20x table-responsive">
-      <caption>'.$caption.'</caption>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Resource ID</th>
-              <th>Total Rentals</th>
-            </tr>
-          </thead><tbody>';
+    $computerHtmlUpper = '
+<div class="limiter">
+		<div class="container-table100">
+			<div class="wrap-table100">
+					<div class="table">
+						<div class="row header">
+							<div class="cell">
+								#
+							</div>
+							<div class="cell">
+								Resource ID
+							</div>
+							<div class="cell">
+								Total Rentals
+							</div>
+						</div>';
+
+
     $computerHtmlMid = '';
-    $computerHtmlBotom = '
-          </tbody>
-        </table>';
+
+
+    $computerHtmlBotom = '</div>
+			</div>
+		</div>
+	</div>';
 
 
     $sql = $report;
@@ -442,11 +454,19 @@ function getReport($report)
                 // Fetch result rows as an associative array
                 $i = 1;
                 while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-                    $computerHtmlMid = $computerHtmlMid . '<tr>
-                          <th scope="row">' . $i . '</th>
-                          <td>' . $row["resourceID"] . '</td>
-                          <td>' . $row["numRentals"] . '</td>
-                        </tr>';
+                    $computerHtmlMid = $computerHtmlMid . '
+
+                         <div class="row">
+							<div class="cell">
+							'.$i.'
+							</div>
+							<div class="cell">
+								' . $row["resourceID"] . '
+							</div>
+							<div class="cell">
+								' . $row["numRentals"] . '
+							</div>
+						</div>';
                     $i++;
                 }
             }
