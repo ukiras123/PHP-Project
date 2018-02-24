@@ -275,12 +275,11 @@ VALUES
 
 INSERT INTO Microphone
 VALUES
-  (21, 2, 37276254, 'SM48', 'Shure'),
-  (22, 2, 53956373, 'SM58', 'Shure'),
-  (23, 2, 52986954, 'f55', 'Audix'),
-  (24, 2, 34779927, 'NT1', 'Rode'),
-  (25, 2, 75985355, 'NT1', 'Rode');
-
+  (21, 4, 37276254, 'SM48', 'Shure'),
+  (22, 4, 53956373, 'SM58', 'Shure'),
+  (23, 4, 52986954, 'f55', 'Audix'),
+  (24, 4, 34779927, 'NT1', 'Rode'),
+  (25, 4, 75985355, 'NT1', 'Rode');
 #select * from Microphone
 
 
@@ -696,6 +695,7 @@ DETERMINISTIC
 
 ##total rentals by resource
 ##run from here
+##run from here
 DELIMITER //
 
 CREATE PROCEDURE app.total_use_by_resource ()
@@ -705,10 +705,21 @@ DETERMINISTIC
   BEGIN
 
     ##code here
-    SELECT DISTINCT resourceID, COUNT(*) AS numRentals
-    FROM v_rental
+    SELECT DISTINCT v.resourceID, v.resource_type,
+      CASE
+      WHEN v.resourceTypeID = 1 THEN CONCAT(c.manufacturer, ': ', c.model)
+      WHEN v.resourceTypeID = 2 THEN CONCAT(p.manufacturer, ': ', p.model)
+      WHEN v.resourceTypeID = 4 THEN CONCAT(m.manufacturer, ': ', m.model)
+      WHEN v.resourceTypeID = 3 THEN CONCAT(r.`name`, ': ', CAST(r.roomNum AS CHAR(150)))
+      END AS `Description`,
+      COUNT(*) AS TotalRentals
+    FROM v_rental v
+      LEFT JOIN Room r ON v.resourceID = r.resourceID AND v.resourceTypeID = r.resourceTypeID
+      LEFT JOIN Computer c ON v.resourceID = c.resourceID AND v.resourceTypeID = c.resourceTypeID
+      LEFT JOIN Microphone m ON v.resourceID = m.resourceID AND v.resourceTypeID = m.resourceTypeID
+      LEFT JOIN Projector p ON v.resourceID = p.resourceID AND v.resourceTypeID = p.resourceTypeID
     GROUP BY resourceID
-    ORDER BY resourceID;
+    ORDER BY TotalRentals DESC, v.resourceID;
 
 
   END// ##to here

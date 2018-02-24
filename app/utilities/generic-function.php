@@ -419,10 +419,10 @@ function getReport($report)
 					<div class="table">
 						<div class="row header">
 							<div class="cell">
-								#
+								Type
 							</div>
 							<div class="cell">
-								Resource ID
+								Detail
 							</div>
 							<div class="cell">
 								Total Rentals
@@ -458,13 +458,13 @@ function getReport($report)
 
                          <div class="row">
 							<div class="cell">
-							'.$i.'
+								' . $row["resource_type"] . '
 							</div>
 							<div class="cell">
-								' . $row["resourceID"] . '
+								' . $row["Description"] . '
 							</div>
 							<div class="cell">
-								' . $row["numRentals"] . '
+								' . $row["TotalRentals"] . '
 							</div>
 						</div>';
                     $i++;
