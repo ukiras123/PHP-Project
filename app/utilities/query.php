@@ -22,9 +22,12 @@ $searchprojector = "CALL available_projectors(CAST('?' AS DATETIME), CAST('?' AS
 
 $searchroom = "CALL available_rooms(CAST('?' AS DATETIME), CAST('?' AS DATETIME))";
 
+$userhistory = "select * from v_rental where username = '?' order by start_date desc";
 
-$bookresource ="insert into user_resources
-set rId = ?, uId = (select uId from users where username = '?'),
-startdatetime = '?', enddatetime = '?'";
+
+$rent_resource ="call app.rent_resource (?, ?, CAST('?' AS DATETIME), CAST('?' AS DATETIME), @success)";  //uID, rID, fromDate, toDate
+$remove_resource ="call app.remove_rental (?, @success)";  //rentalID
+$get_proc_result = "select @success as success";
+
 
 ?>

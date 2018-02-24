@@ -106,6 +106,67 @@ function getResourceDropdown()
 }
 
 
+function getUserReservation($query)
+{
+    $computerHtmlUpper = '<table class="table top20x table-responsive">
+      <caption>Your Reservations</caption>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Resource</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Action</th>
+            </tr>
+          </thead><tbody>';
+
+    $computerHtmlMid = '';
+
+    $computerHtmlBotom = '
+          </tbody>
+        </table>';
+
+
+    $sql = $query;
+    $link = getDBLink();
+
+    if ($stmt = mysqli_prepare($link, $sql)) {
+
+        // Attempt to execute the prepared statement
+        if (mysqli_stmt_execute($stmt)) {
+            $result = mysqli_stmt_get_result($stmt);
+
+            // Check number of rows in the result set
+            if (mysqli_num_rows($result) > 0) {
+                // Fetch result rows as an associative array
+                $i = 1;
+                while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                    $addTd = '<td><button id="action-delete" name="deleteResource" type="submit" class="btn btn-danger action-delete" value="' . $row["rentalID"] . '">Delete</button></td>';
+                    $computerHtmlMid = $computerHtmlMid . '
+                         <tr>
+                          <th scope="row">' . $i . '</th>
+                          <td>' . $row["resource_type"] . '</td>
+                          <td>' . $row["start_date"] . '</td>
+                          <td>' . $row["end_date"] . '</td>'.
+                            $addTd .'
+                        </tr>';
+                    $i++;
+                }
+            }
+        } else {
+            echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+        }
+        mysqli_stmt_close($stmt);
+    } else {
+        echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+    }
+
+
+    return $computerHtmlUpper . $computerHtmlMid . $computerHtmlBotom;
+}
+
+
+
 function getComputerDetails($query, $withAction = false)
 {
     $addTh = $withAction == true ? "<th>Action</th>" : "";

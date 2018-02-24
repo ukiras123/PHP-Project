@@ -37,7 +37,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     setcookie("startDate", $_POST["startDate"], time() + (86400 * 30), "/"); // 86400 = 1 day
     setcookie("endDate", $_POST["endDate"], time() + (86400 * 30), "/"); // 86400 = 1 day
 
-    #TODO- Fix These
     if(isset($_POST["type"])) {
         if ($_POST["type"] == "computer") {
             $searchcomputer = replaceFromHaystack($searchcomputer, "?", $_POST["startDate"]);
@@ -68,10 +67,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 $content = '
- <div id="todo" class="alert alert-danger" hidden>
-        <strong>Failed!</strong> TODO : Reserve functionality is yet to be implemented.
- </div>
- 
 <div id="loader" class="loader center" hidden></div>
 
 <div id="pass" class="alert alert-success" hidden>

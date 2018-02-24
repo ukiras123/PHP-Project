@@ -1,7 +1,15 @@
-##SQL Scripts for database, table creation and initialization, along with example queries
+##SQL Scripts for database, table creation and initialization, views, and stored precedures
+##Please run each section sequentially
+##Note, some of the example queries are designed to fail to showcase constraints and checks
 
 
-#########CREATE TABLES##############
+/***************************START HERE**********************************/
+
+######################################
+##									##
+##			CREATE TABLES			##
+##									##
+######################################
 
 DROP DATABASE IF EXISTS app;
 Create DATABASE app;
@@ -136,8 +144,12 @@ CREATE TABLE Rental_Detail (
 
 
 
-##########POPULATE QUERIES##############
-##---------------------------Master Date-----------------------------
+######################################
+##									##
+##			POPULATE TABLES			##
+##									##
+######################################
+
 ##insert for ResourceType
 INSERT INTO ResourceType
 VALUES
@@ -288,7 +300,81 @@ VALUES
 #select * from UserType
 
 
-#View -----------------------
+INSERT INTO `User`(userTypeID, companyID, username, `password`, firstName, LastName, email, phone, sex, `profile`, add_date)
+VALUES
+  (1, NULL, 'test1', 'hashgoeshere', 'User', 'Test1', 'no@email.com', '(222) 222-2222', 'Male', '', NOW()),
+  (1, NULL, 'test2', 'hashgoeshere', 'User', 'Test2', 'no@email.com', '(222) 222-2222', 'Female', '', NOW()),
+  (1, NULL, 'test3', 'hashgoeshere', 'User', 'Test3', 'no@email.com', '(222) 222-2222', 'Male', '', NOW()),
+  (2, 1, 'coTest1', 'hashgoeshere', 'Company', 'Test1', 'no@email.com', '(333) 333-3333', 'Male', '', NOW()),
+  (2, 1, 'coTest2', 'hashgoeshere', 'Company', 'Test2', 'no@email.com', '(333) 333-3333', 'Female', '', NOW());
+
+#select * from User
+
+
+##populate some initial rentals
+INSERT INTO Rental(userID, start_date, end_date, add_date)
+VALUES
+  (1, CAST('2018-02-20 10:00:00' AS DATETIME), CAST('2018-02-20 12:00:00' AS DATETIME), NOW()),
+  (1, CAST('2018-03-05 11:00:00' AS DATETIME), CAST('2018-03-05 12:30:00' AS DATETIME), NOW()),
+  (1, CAST('2018-03-07 17:00:00' AS DATETIME), CAST('2018-03-07 18:30:00' AS DATETIME), NOW()),
+  (2, CAST('2018-02-17 09:00:00' AS DATETIME), CAST('2018-02-17 10:00:00' AS DATETIME), NOW()),
+  (2, CAST('2018-02-25 14:00:00' AS DATETIME), CAST('2018-02-25 15:00:00' AS DATETIME), NOW()),
+  (3, CAST('2018-02-25 15:15:00' AS DATETIME), CAST('2018-02-25 16:30:00' AS DATETIME), NOW()),
+  (3, CAST('2018-03-01 08:00:00' AS DATETIME), CAST('2018-03-01 10:00:00' AS DATETIME), NOW()),
+  (3, CAST('2018-03-01 10:30:00' AS DATETIME), CAST('2018-03-01 12:00:00' AS DATETIME), NOW()),
+  (4, CAST('2018-03-01 10:30:00' AS DATETIME), CAST('2018-03-01 12:30:00' AS DATETIME), NOW()),
+  (4, CAST('2018-03-01 13:00:00' AS DATETIME), CAST('2018-03-01 14:30:00' AS DATETIME), NOW()),
+  (4, CAST('2018-01-31 10:00:00' AS DATETIME), CAST('2018-01-31 11:30:00' AS DATETIME), NOW()),
+  (1, CAST('2018-01-30 11:00:00' AS DATETIME), CAST('2018-01-30 12:30:00' AS DATETIME), NOW()),
+  (1, CAST('2018-02-27 09:00:00' AS DATETIME), CAST('2018-02-27 10:30:00' AS DATETIME), NOW()),
+  (2, CAST('2018-02-27 11:00:00' AS DATETIME), CAST('2018-02-27 12:30:00' AS DATETIME), NOW()),
+  (3, CAST('2018-02-27 13:00:00' AS DATETIME), CAST('2018-02-27 14:30:00' AS DATETIME), NOW()),
+  (4, DATE_ADD(NOW(), INTERVAL 3 DAY), DATE_ADD(DATE_ADD(NOW(), INTERVAL 1 HOUR), INTERVAL 3 DAY), NOW()); ##just to showcase date functions
+
+#select * from Rental
+
+INSERT INTO Rental_Detail
+VALUES
+  (1, 11),
+  (1, 1),
+  (1, 24),
+  (2, 12),
+  (3, 2),
+  (4, 13),
+  (4, 1),
+  (5, 14),
+  (5, 7),
+  (6, 14),
+  (6, 6),
+  (7, 15),
+  (8, 15),
+  (9, 16),
+  (9, 2),
+  (10, 16),
+  (11, 17),
+  (11, 3),
+  (12, 17),
+  (13, 18),
+  (13, 25),
+  (13, 9),
+  (14, 11),
+  (15, 1),
+  (16, 11),
+  (16, 4);
+
+#select * from Rental_Detail
+
+
+
+
+
+######################################
+##									##
+##			Views and Sprocs		##
+##									##
+######################################
+
+##create a view to reduce joins in queries and reporting
 CREATE VIEW v_rental AS
   SELECT c.userID, c.username, c.firstName, c.lastName, r.rentalID, rs.resourceID, rs.resourceTypeID, rt.resource_type,
     r.start_date, r.end_date, r.add_date
@@ -303,9 +389,17 @@ CREATE VIEW v_rental AS
       ON rs.resourceTypeID = rt.resourceTypeID
   ORDER BY r.rentalID, rs.resourceID;
 
-# Store Proc ---------------------------------------------------------------------
 
-# Checking for available rooms for given time
+##try it out
+##SELECT * FROM v_rental;
+
+##now its easy to check all sorts of things, such as how many rentals user_1 has
+##SELECT * FROM v_rental WHERE userID = 1;
+
+
+##Stored Procedures to help in application functionality and reporting
+
+##run from here
 DELIMITER //
 
 CREATE PROCEDURE app.available_rooms (IN fromDate DATETIME, IN toDate DATETIME) ##2 params
@@ -322,16 +416,19 @@ DETERMINISTIC
             SELECT resourceID
             FROM v_rental
             WHERE resourceTypeID = 3 ##rooms
-                  AND fromDate BETWEEN start_date AND end_date
-                  AND toDate BETWEEN start_date AND end_date
+                  AND (fromDate BETWEEN start_date AND end_date OR toDate BETWEEN start_date AND end_date)
           )
     ORDER BY roomNum;
 
 
   END// ##to here
 
+
 ##try it out
-# CALL available_rooms(CAST('2018-02-20 10:00:00' AS DATETIME), CAST('2018-02-20 12:00:00' AS DATETIME))
+##CALL available_rooms(CAST('2018-02-20 10:00:00' AS DATETIME), CAST('2018-02-20 12:00:00' AS DATETIME))
+##CALL available_rooms(CAST('2018-02-20 05:00:00' AS DATETIME), CAST('2018-02-20 12:00:00' AS DATETIME))
+
+
 
 # Checking for available computer for given time
 DELIMITER //
@@ -350,8 +447,7 @@ DETERMINISTIC
             SELECT resourceID
             FROM v_rental
             WHERE resourceTypeID = 1 ##computer
-                  AND fromDate BETWEEN start_date AND end_date
-                  AND toDate BETWEEN start_date AND end_date
+                  AND (fromDate BETWEEN start_date AND end_date OR toDate BETWEEN start_date AND end_date)
           )
     ORDER BY manufacturer;
 
@@ -376,8 +472,7 @@ DETERMINISTIC
             SELECT resourceID
             FROM v_rental
             WHERE resourceTypeID = 2 ##projector
-                  AND fromDate BETWEEN start_date AND end_date
-                  AND toDate BETWEEN start_date AND end_date
+                  AND (fromDate BETWEEN start_date AND end_date OR toDate BETWEEN start_date AND end_date)
           )
     ORDER BY manufacturer;
 
@@ -401,8 +496,7 @@ DETERMINISTIC
             SELECT resourceID
             FROM v_rental
             WHERE resourceTypeID = 4 ##microphone
-                  AND fromDate BETWEEN start_date AND end_date
-                  AND toDate BETWEEN start_date AND end_date
+                  AND (fromDate BETWEEN start_date AND end_date OR toDate BETWEEN start_date AND end_date)
           )
     ORDER BY manufacturer;
 
@@ -411,103 +505,239 @@ DETERMINISTIC
 
 
 
+##sproc to add a rental for a resource, checking that it is available
 
-##---------------------------Test Date-----------------------------
+##run from here
+DELIMITER //
 
+CREATE PROCEDURE app.rent_resource (IN uID INT, IN rID INT, IN fromDate DATETIME, IN toDate DATETIME, OUT ret BOOLEAN)
+LANGUAGE SQL
+DETERMINISTIC
+  COMMENT 'Sproc that inserts a new rental into appropriate tables'
+  BEGIN
+    ##variables
+    DECLARE rTypeID INT;
 
+    ##check resource exists
+    SET ret = (SELECT EXISTS (SELECT * FROM Resource WHERE resourceID = rID));
 
-INSERT INTO `User`(userTypeID, companyID, username, `password`, firstName, LastName, email, phone, sex, `profile`, add_date)
-VALUES
-  (1, NULL, 'gcude', 'hashgoeshere', 'Gavin', 'Cude', 'no@email.com', '(222) 222-2222', 'Male', '', NOW()),
-  (2, 1, 'coTest', 'hashgoeshere', 'Company', 'Test', 'no@email.com', '(333) 333-3333', 'Male', '', NOW());
+    IF ret THEN
 
-#select * from User
+      ##find type ID
+      SET rTypeID = (SELECT DISTINCT resourceTypeID FROM resource WHERE resourceID = rID);
 
-
-##populate some initial rentals
-INSERT INTO Rental(userID, start_date, end_date, add_date)
-VALUES
-  (1, CAST('2018-02-20 10:00:00' AS DATETIME), CAST('2018-02-20 12:00:00' AS DATETIME), NOW()),
-  (1, CAST('2018-02-21 11:00:00' AS DATETIME), CAST('2018-02-21 12:30:00' AS DATETIME), NOW()),
-  (2, DATE_ADD(NOW(), INTERVAL 3 DAY), DATE_ADD(DATE_ADD(NOW(), INTERVAL 1 HOUR), INTERVAL 3 DAY), NOW()); ##just to showcase date studd
-
-#select * from Rental
-
-INSERT INTO Rental_Detail
-VALUES
-  (1, 1),
-  (1, 6),
-  (1, 11),
-  (2, 3),
-  (2, 16),
-  (3, 2),
-  (3, 18),
-  (3, 24);
-
-
-
-#select * from Rental_Detail
-
-
-############QUERIES#############
-##example showing how the check constraint works
-INSERT INTO Computer
-VALUES
-  (100, 2, 0000, '', '', ''); ##get foreign key constraint fail
-
-
-
-##now, showing how data can be retrieved from the rents relation. In this case all rentals for user 1
-SELECT c.userID, c.firstName, c.lastName, r.rentalID, rs.resourceID, rs.resourceTypeID, rt.resource_type,
-  r.start_date, r.end_date, r.add_date
-FROM Rental r
-  JOIN Rental_Detail rd
-    ON r.rentalID = rd.rentalID
-  JOIN `User` c
-    ON r.userID = c.userID
-  JOIN Resource rs
-    ON rd.resourceID = rs.resourceID
-  JOIN ResourceType RT
-    ON rs.resourceTypeID = rt.resourceTypeID
-ORDER BY r.rentalID, rs.resourceID;
-
-
-##say we wanted to check that a timeslot for a resource was open
-##lets get a list of resources that are open for timeslot
-## 2018-02-20 10:00:00 AND 2018-02-20 12:00:00
-
-##make sure to run variables with query
-SET @fromDate = CAST('2018-02-20 10:00:00' AS DATETIME);
-SET @toDate = CAST('2018-02-20 12:00:00' AS DATETIME); 	##variables are useful.
-
-SELECT resourceID
-FROM Resource r
-WHERE resourceID NOT IN
-      (
-        ##this select IDs where the target from or to dates already exist
-        SELECT rd.resourceID
-        FROM Rental r
-          JOIN rental_detail rd
-            ON r.rentalID = rd.rentalID
-        WHERE @fromDate BETWEEN r.start_date AND r.end_date
-              AND @toDate BETWEEN r.start_date AND r.end_date
+      ##check available
+      SET ret = (
+        SELECT NOT EXISTS (
+            SELECT resourceID
+            FROM v_rental
+            WHERE resourceTypeID = rTypeID
+                  AND resourceID = rID
+                  AND (fromDate BETWEEN start_date AND end_date OR toDate BETWEEN start_date AND end_date)
+        )
       );
 
+      IF ret THEN
+        ##add Rental Entry
+        INSERT INTO Rental(userID, start_date, end_date, add_date)
+        VALUES
+          (uID, fromDate, toDate, NOW());
 
-##you can do the reverse to see which resources are being used for that time block
-##make sure to run variables with query
-SET @fromDate = CAST('2018-02-20 10:00:00' AS DATETIME);
-SET @toDate = CAST('2018-02-20 12:00:00' AS DATETIME); 	##variables are useful.
+        ##add Rental Detail
+        INSERT INTO Rental_Detail
+        VALUES(LAST_INSERT_ID(), rID);
 
-SELECT resourceID
-FROM Resource r
-WHERE resourceID IN
-      (
-        ##this select IDs where the target from or to dates already exist
-        SELECT rd.resourceID
-        FROM Rental r
-          JOIN rental_detail rd
-            ON r.rentalID = rd.rentalID
-        WHERE @fromDate BETWEEN r.start_date AND r.end_date
-              AND @toDate BETWEEN r.start_date AND r.end_date
-      );
+        #set ret to treu
+        SET ret = TRUE;
+
+      END IF;
+
+
+    END IF;
+
+
+  END// ##to here
+
+/*test **note, update params as needed
+call app.rent_resource (1, 1, CAST('2018-02-24 10:00:00' AS DATETIME), CAST('2018-02-24 12:00:00' AS DATETIME), @test);
+select @test;
+
+select * from v_rental;
+*/
+
+##sproc to update rental record. To showcase CRUD. Allows update to anothe resource for the same timeslot
+##run from here
+DELIMITER //
+
+CREATE PROCEDURE app.update_rental (IN rentID INT, IN old_resID INT, IN new_resID INT, OUT ret BOOLEAN)
+LANGUAGE SQL
+DETERMINISTIC
+  COMMENT 'Sproc that updates a given rentalID'
+  BEGIN
+    ##variables
+    DECLARE rTypeID INT;
+    DECLARE fromDate DATETIME;
+    DECLARE toDate DATETIME;
+
+    ##check rental exists
+    SET ret = (SELECT EXISTS (SELECT * FROM Rental WHERE rentalID = rentID));
+
+    IF ret THEN
+
+      ##check resource exists
+      SET ret = (SELECT EXISTS (SELECT * FROM Resource WHERE resourceID = new_resID));
+
+      IF ret THEN
+
+        ##find type ID
+        SET rTypeID = (SELECT DISTINCT resourceTypeID FROM resource WHERE resourceID = new_resID);
+        SET fromDate = (SELECT start_date FROM Rental WHERE rentalID = rentID);
+        SET toDate = (SELECT end_date FROM Rental WHERE rentalID = rentID);
+
+        ##check available
+        SET ret = (
+          SELECT NOT EXISTS (
+              SELECT resourceID
+              FROM v_rental
+              WHERE resourceTypeID = rTypeID
+                    AND resourceID = new_resID
+                    AND (fromDate BETWEEN start_date AND end_date OR toDate BETWEEN start_date AND end_date)
+          )
+        );
+
+        IF ret THEN
+          ##update Rental Entry
+          UPDATE Rental_detail
+          SET resourceID = new_resID
+          WHERE rentalID = rentID
+                AND resourceID = old_resID;
+
+          #set ret to treu
+          SET ret = TRUE;
+
+        END IF;
+
+      END IF;
+    END IF;
+
+
+  END// ##to here
+
+/*test **note, update params as needed
+call app.update_rental (7, 1, 24, @test);
+select @test;
+
+select * from v_rental;
+*/
+
+
+##sproc to remove rental (just to showcase CRUD. In the real world an active_flag and change_date fields might be used
+##run from here
+DELIMITER //
+
+CREATE PROCEDURE app.remove_rental (IN rID INT, OUT ret BOOLEAN)
+LANGUAGE SQL
+DETERMINISTIC
+  COMMENT 'Sproc that removes a rental record'
+  BEGIN
+
+    ##check rental exists
+    SET ret = (SELECT EXISTS (SELECT * FROM Rental WHERE rentalID = rID));
+
+    IF ret THEN
+
+      ##remove rental_ID from rental_detail;
+      DELETE FROM Rental_Detail
+      WHERE rentalID = rID;
+
+      ##remove from rental tabl;e
+      DELETE FROM Rental
+      WHERE rentalID = rID;
+
+      ##set ret true
+      SET ret = TRUE;
+
+    END IF;
+
+  END// ##to here
+
+
+/*test **note, update params as needed
+call app.remove_rental (7, @test);
+select @test;
+
+select * from v_rental;
+*/
+
+
+##reporting sprocs
+
+##sproc that returns rental history for a user
+##run from here
+DELIMITER //
+
+CREATE PROCEDURE app.user_rental_history (IN uID INT)
+LANGUAGE SQL
+DETERMINISTIC
+  COMMENT 'Sproc to return rental history for a userID'
+  BEGIN
+
+    ##code here
+    SELECT *
+    FROM v_rental
+    WHERE userID = uID
+    ORDER BY rentalID;
+
+
+  END// ##to here
+
+##CALL user_rental_history(1)
+
+
+##total rentals by resource
+##run from here
+DELIMITER //
+
+CREATE PROCEDURE app.total_use_by_resource ()
+LANGUAGE SQL
+DETERMINISTIC
+  COMMENT 'Sproc to return total rentals by resource'
+  BEGIN
+
+    ##code here
+    SELECT DISTINCT resourceID, COUNT(*) AS numRentals
+    FROM v_rental
+    GROUP BY resourceID
+    ORDER BY resourceID;
+
+
+  END// ##to here
+
+##CALL total_use_by_resource ();
+
+
+##room usage percentage
+##run from here
+DELIMITER //
+
+CREATE PROCEDURE app.percent_room_usage ()
+LANGUAGE SQL
+DETERMINISTIC
+  COMMENT 'Sproc to return each room use percentage'
+  BEGIN
+
+    ##code here
+    SELECT DISTINCT r.resourceID, r.roomNum, r.`name`,
+      CASE
+      WHEN v.rentalID IS NULL THEN 0
+      ELSE COUNT(*) / (SELECT COUNT(*) FROM v_rental WHERE resourceTypeID = 3) * 100
+      END AS Percent_Usage
+    FROM Room r
+      LEFT JOIN v_rental v
+        ON r.resourceID = v.resourceID AND r.resourceTypeID = v.resourceTypeID
+    GROUP BY r.roomNum, r.`name`
+    ORDER BY r.roomNum;
+
+  END// ##to here
+
+##CALL percent_room_usage ();
