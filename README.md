@@ -20,6 +20,6 @@
 - docker run -d -p 8080:80 ukiras123/mycompany
 - http://localhost:8080/
 
-**http://ec2-13-57-248-248.us-west-1.compute.amazonaws.com/**
+**http://ec2-54-67-51-99.us-west-1.compute.amazonaws.com/**
 
 **Youtube link: https://youtu.be/RdArUbjBSCo**
