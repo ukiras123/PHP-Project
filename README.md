@@ -22,5 +22,3 @@
 
 **http://ec2-54-67-51-99.us-west-1.compute.amazonaws.com/**
 
-**Youtube link: https://youtu.be/RdArUbjBSCo**
-.............................................................................................
